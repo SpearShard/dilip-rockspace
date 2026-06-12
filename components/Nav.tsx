@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -65,11 +64,9 @@ export default function Nav() {
       <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 mt-4">
         <div className="max-w-7xl mx-auto bg-accent-light/70 backdrop-blur-xl border border-accent/10 rounded-2xl px-6 h-16 md:h-16 flex items-center justify-between shadow-lg shadow-accent-dark/5">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="logo-flip logo-glow relative w-8 h-8 flex items-center justify-center">
-              <span className="absolute inset-0 rounded-full bg-accent/10 group-hover:bg-accent/20 transition-colors duration-500" />
-              <Image src="/rockspace.png" alt="RockSpace" width={20} height={20} className="relative z-10 h-5 w-auto drop-shadow-[0_0_6px_rgba(167,139,250,0.3)] group-hover:drop-shadow-[0_0_12px_rgba(167,139,250,0.6)] transition-all duration-500" />
-              <span className="logo-back text-[10px] font-bold text-accent-dark font-hand">✦</span>
-            </div>
+            <span className="text-xl leading-none text-accent-dark group-hover:text-accent-dark/80 transition-colors drop-shadow-[0_0_8px_rgba(167,139,250,0.25)]">
+              ◆
+            </span>
             <span className="text-text font-bold tracking-tight text-sm hidden sm:block">
               Rock<span className="text-text/40">Space</span>
             </span>

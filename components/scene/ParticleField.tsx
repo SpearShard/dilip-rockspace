@@ -12,7 +12,7 @@ function seededRandom(seed: number) {
   };
 }
 
-export default function ParticleField({ scroll = 0 }: { scroll?: number }) {
+export default function ParticleField() {
   const pointsRef = useRef<THREE.Points>(null);
 
   const [positions, colors, sizes] = useMemo(() => {
@@ -50,7 +50,7 @@ export default function ParticleField({ scroll = 0 }: { scroll?: number }) {
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
     const t = clock.elapsedTime;
-    pointsRef.current.rotation.y = t * 0.02 + scroll * 0.001;
+    pointsRef.current.rotation.y = t * 0.02;
     pointsRef.current.rotation.x = Math.sin(t * 0.015) * 0.08;
   });
 

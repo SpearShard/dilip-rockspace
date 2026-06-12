@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import dynamic from 'next/dynamic';
+import { SceneGate } from '@/lib/useInView';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,11 +76,13 @@ export default function Process() {
 
   return (
     <section id="process" ref={sectionRef} className="relative py-28 md:py-36 px-6 bg-surface section-frame overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <Suspense fallback={null}>
-          <ProcessScene />
-        </Suspense>
-      </div>
+      <SceneGate>
+        <div className="absolute inset-0 pointer-events-none opacity-20">
+          <Suspense fallback={null}>
+            <ProcessScene />
+          </Suspense>
+        </div>
+      </SceneGate>
 
       <div className="absolute inset-0 bg-gradient-to-t from-accent/5 via-transparent to-accent-warm/5 pointer-events-none" />
       <span className="section-number hidden lg:block">04</span>

@@ -8,6 +8,7 @@ import { useGSAP } from '@gsap/react';
 import Image from 'next/image';
 import { teamMembers } from '@/lib/projectData';
 import dynamic from 'next/dynamic';
+import { SceneGate } from '@/lib/useInView';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,11 +75,13 @@ export default function Team() {
     <section id="team" ref={sectionRef} className="relative py-28 md:py-36 px-6 bg-surface section-frame overflow-hidden">
       <span className="section-number hidden lg:block">05</span>
 
-      <div className="absolute inset-0 pointer-events-none opacity-30">
-        <Suspense fallback={null}>
-          <TeamScene persona={active} />
-        </Suspense>
-      </div>
+      <SceneGate>
+        <div className="absolute inset-0 pointer-events-none opacity-30">
+          <Suspense fallback={null}>
+            <TeamScene persona={active} />
+          </Suspense>
+        </div>
+      </SceneGate>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-16 section-corner">
@@ -92,64 +95,63 @@ export default function Team() {
           </h2>
         </div>
 
-        <div className="team-content">
-          <div className="flex gap-3 mb-10 overflow-x-auto pb-2">
+        <div className="team-content flex flex-col md:flex-row gap-10 md:gap-16">
+          <div className="flex flex-row md:flex-col gap-2 md:gap-1 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 shrink-0">
             {tabs.map((tab) => (
               <button
                 key={tab.i}
                 onClick={() => setActive(tab.i)}
-                className={`px-5 py-2.5 text-sm rounded-full border transition-all shrink-0 ${
+                className={`text-left px-4 md:px-5 py-3 rounded-xl border transition-all shrink-0 ${
                   active === tab.i
                     ? 'bg-accent-dark text-white border-accent-dark shadow-lg shadow-accent-dark/20'
                     : 'border-border text-text-muted hover:border-accent/50 hover:text-text'
                 }`}
               >
-                {tab.name}
+                <div className="text-sm md:text-base font-semibold">{tab.name}</div>
+                <div className="text-[11px] md:text-xs opacity-70 mt-0.5 tracking-wide whitespace-nowrap">{tab.role}</div>
               </button>
             ))}
           </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="grid md:grid-cols-3 gap-10 md:gap-16"
-            >
-              <div className="md:col-span-1">
-                <TiltCard className="w-32 h-32 rounded-2xl overflow-hidden mb-6 shadow-lg shadow-accent-dark/10">
+          <div className="flex-1 min-w-0">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="flex flex-col sm:flex-row gap-6 md:gap-10"
+              >
+                <TiltCard className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden shrink-0 shadow-lg shadow-accent-dark/10">
                   <Image
                     src={['/debasispfp.png', '/jayadityapfp.png', '/dilippfp.png'][active]}
                     alt={member.name}
-                    width={128}
-                    height={128}
+                    width={144}
+                    height={144}
                     className="w-full h-full object-cover"
                   />
                 </TiltCard>
-                <h3 className="text-2xl font-semibold text-text">{member.name}</h3>
-                <p className="text-sm font-mono text-accent-dark mt-2 tracking-wide">{member.role}</p>
-              </div>
-              <div className="md:col-span-2">
-                <p className="text-base md:text-lg text-text-muted leading-relaxed mb-6">{bio}</p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {member.skills.map((skill) => (
-                    <span key={skill} className="px-3 py-1.5 text-xs font-mono bg-bg border border-border rounded-full text-text-muted">
-                      {skill}
-                    </span>
-                  ))}
+                <div className="min-w-0">
+                  <p className="text-base md:text-lg text-text-muted leading-relaxed mb-5">{bio}</p>
+                  <div className="flex flex-wrap gap-2 mb-5">
+                    {member.skills.map((skill) => (
+                      <span key={skill} className="px-3 py-1.5 text-xs font-mono bg-bg border border-border rounded-full text-text-muted">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-6">
+                    {member.social.map((s) => (
+                      <a key={s.platform} href={s.url} target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-accent-dark transition-colors">
+                        {s.platform} ↗
+                      </a>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex gap-6">
-                  {member.social.map((s) => (
-                    <a key={s.platform} href={s.url} target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-accent-dark transition-colors">
-                      {s.platform} ↗
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>

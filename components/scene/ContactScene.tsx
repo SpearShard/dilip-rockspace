@@ -1,25 +1,27 @@
 'use client';
 
-import { useRef, useState, Suspense } from 'react';
+import { useRef, useState, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 function DotField() {
   const ref = useRef<THREE.Points>(null);
-  const count = 300;
-  const positions = new Float32Array(count * 3);
 
-  let seed = 12345;
-  const rand = () => {
-    seed = (seed * 16807 + 0) % 2147483647;
-    return (seed - 1) / 2147483646;
-  };
-
-  for (let i = 0; i < count; i++) {
-    positions[i * 3] = (rand() - 0.5) * 10;
-    positions[i * 3 + 1] = (rand() - 0.5) * 10;
-    positions[i * 3 + 2] = (rand() - 0.5) * 6;
-  }
+  const positions = useMemo(() => {
+    const count = 300;
+    const pos = new Float32Array(count * 3);
+    let seed = 12345;
+    const rand = () => {
+      seed = (seed * 16807 + 0) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (rand() - 0.5) * 10;
+      pos[i * 3 + 1] = (rand() - 0.5) * 10;
+      pos[i * 3 + 2] = (rand() - 0.5) * 6;
+    }
+    return pos;
+  }, []);
 
   useFrame(({ clock }) => {
     if (!ref.current) return;

@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import dynamic from 'next/dynamic';
 import CircleHighlight from './CircleHighlight';
+import { SceneGate } from '@/lib/useInView';
 
 const HeroScene = dynamic(() => import('@/components/scene/HeroScene'), { ssr: false });
 
@@ -208,14 +209,16 @@ export default function Hero() {
   }, { dependencies: [reduced], scope: sectionRef });
 
   return (
-    <section id="hero" ref={sectionRef} className="relative min-h-screen flex items-center px-6 pt-24 overflow-hidden">
-      <HeroScene />
+    <section id="hero" ref={sectionRef} className="relative min-h-screen flex items-center px-6 pt-24 overflow-hidden" style={{ contain: 'layout style paint' }}>
+      <SceneGate>
+        <HeroScene />
+      </SceneGate>
 
       {/* Base atmosphere */}
       <div className="hero-bg-glow absolute inset-0 bg-gradient-to-b from-accent-light/20 via-accent/8 to-bg pointer-events-none" />
-      <div className="absolute top-1/4 right-1/4 w-[50rem] h-[50rem] bg-accent/8 rounded-full blur-[200px] pointer-events-none glow-pulse" />
-      <div className="absolute bottom-1/3 left-0 w-80 h-80 bg-accent-warm/8 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 right-1/4 w-[50rem] h-[50rem] bg-accent/8 rounded-full blur-[100px] pointer-events-none glow-pulse" />
 
+      <div className="absolute bottom-1/3 left-0 w-80 h-80 bg-accent-warm/8 rounded-full blur-[60px] pointer-events-none" />
       {/* Subtle grid, faded toward edges */}
       <div
         className="absolute inset-0 grid-pattern pointer-events-none"

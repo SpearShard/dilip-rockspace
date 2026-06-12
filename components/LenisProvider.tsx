@@ -16,7 +16,7 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 0.8,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.0,
     });
 
     lenis.on('scroll', ScrollTrigger.update);

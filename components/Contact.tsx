@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import BackgroundBeams from './ui/background-beams';
 import dynamic from 'next/dynamic';
+import { SceneGate } from '@/lib/useInView';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -34,16 +35,17 @@ export default function Contact() {
   }, { dependencies: [reduced], scope: sectionRef });
 
   return (
-    <section id="contact" ref={sectionRef} className="relative min-h-screen flex flex-col justify-center px-6 pt-28 pb-0 overflow-hidden">
-      {!reduced && <BackgroundBeams />}
+    <section id="contact" ref={sectionRef} className="relative min-h-screen flex flex-col justify-center px-6 pt-28 pb-0 overflow-hidden" style={{ contain: 'layout style paint' }}>
+      <SceneGate margin="150%">
+        {!reduced && <BackgroundBeams />}
+        <div className="absolute inset-0 pointer-events-none opacity-40">
+          <Suspense fallback={null}>
+            <ContactScene />
+          </Suspense>
+        </div>
+      </SceneGate>
 
-      <div className="absolute inset-0 pointer-events-none opacity-40">
-        <Suspense fallback={null}>
-          <ContactScene />
-        </Suspense>
-      </div>
-
-      <div className="absolute top-1/4 right-1/4 w-[30rem] h-[30rem] bg-accent/10 rounded-full blur-[150px] pointer-events-none glow-pulse" />
+      <div className="absolute top-1/4 right-1/4 w-[30rem] h-[30rem] bg-accent/10 rounded-full blur-[80px] pointer-events-none glow-pulse" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="section-corner max-w-3xl">
@@ -89,44 +91,44 @@ export default function Contact() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 py-16 md:py-20">
-          <div className="grid md:grid-cols-3 gap-12 md:gap-8">
-            <div className="md:col-span-1">
-              <span className="text-text font-bold tracking-tight text-lg">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+            <div className="col-span-2 md:col-span-1">
+              <span className="text-text font-bold tracking-tight text-base md:text-lg">
                 Rock<span className="text-text/40">Space</span>
               </span>
-              <p className="text-text-muted text-sm mt-3 leading-relaxed max-w-xs">
+              <p className="text-text-muted text-xs md:text-sm mt-2 leading-relaxed max-w-xs">
                 Design, development, AI automation &amp; content. From Bengaluru, for the world.
               </p>
             </div>
 
-            <div className="md:col-span-1">
-              <h4 className="text-text/60 text-xs font-mono tracking-[0.15em] uppercase mb-4 font-semibold">Navigate</h4>
-              <div className="flex flex-col gap-2.5">
+            <div>
+              <h4 className="text-text/60 text-[11px] md:text-xs font-mono tracking-[0.15em] uppercase mb-3 md:mb-4 font-semibold">Navigate</h4>
+              <div className="flex flex-col gap-2 md:gap-2.5">
                 {['Services', 'Work', 'Process', 'Team', 'Contact'].map((l) => (
-                  <a key={l} href={`#${l.toLowerCase()}`} className="text-text-muted hover:text-accent-dark text-sm transition-colors font-medium">
+                  <a key={l} href={`#${l.toLowerCase()}`} className="text-text-muted hover:text-accent-dark text-xs md:text-sm transition-colors font-medium">
                     {l}
                   </a>
                 ))}
               </div>
             </div>
 
-            <div className="md:col-span-1">
-              <h4 className="text-text/60 text-xs font-mono tracking-[0.15em] uppercase mb-4 font-semibold">Connect</h4>
-              <div className="flex flex-col gap-2.5">
+            <div>
+              <h4 className="text-text/60 text-[11px] md:text-xs font-mono tracking-[0.15em] uppercase mb-3 md:mb-4 font-semibold">Connect</h4>
+              <div className="flex flex-col gap-2 md:gap-2.5">
                 {[['Instagram', '#'], ['LinkedIn', '#'], ['GitHub', '#'], ['Dribbble', '#']].map(([name, url]) => (
-                  <a key={name} href={url} className="text-text-muted hover:text-accent-dark text-sm transition-colors flex items-center gap-2 group font-medium">
+                  <a key={name} href={url} className="text-text-muted hover:text-accent-dark text-xs md:text-sm transition-colors flex items-center gap-1.5 group font-medium">
                     {name}
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px]">↗</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[9px] md:text-[10px]">↗</span>
                   </a>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="mt-16 pt-6 border-t border-accent/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <p className="text-text-muted/80 text-xs font-mono font-medium">© 2026 RockSpace</p>
-            <p className="text-text-muted/80 text-xs font-mono tracking-wider font-medium">12.9716° N / 77.5946° E — Bengaluru, India</p>
-            <p className="text-text-muted/80 text-xs font-mono">∞</p>
+          <div className="mt-10 md:mt-16 pt-5 md:pt-6 border-t border-accent/10 flex flex-row flex-wrap items-center justify-between gap-x-4 md:gap-x-6 gap-y-1.5">
+            <p className="text-text-muted/80 text-[11px] md:text-xs font-mono">© 2026 RockSpace</p>
+            <p className="text-text-muted/80 text-[11px] md:text-xs font-mono tracking-wider">12.9716° N / 77.5946° E — Bengaluru, India</p>
+            <p className="text-text-muted/80 text-[11px] md:text-xs font-mono">∞</p>
           </div>
         </div>
       </footer>
