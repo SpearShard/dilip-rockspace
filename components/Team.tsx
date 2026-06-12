@@ -1,7 +1,6 @@
 'use client';
 
-import { useRef, useState, Suspense } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, Suspense } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -9,149 +8,66 @@ import Image from 'next/image';
 import { teamMembers } from '@/lib/projectData';
 import dynamic from 'next/dynamic';
 import { SceneGate } from '@/lib/useInView';
+import DotGrid from '@/components/patterns/DotGrid';
+import DottedBoundary from '@/components/patterns/DottedBoundary';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const TeamScene = dynamic(() => import('@/components/scene/TeamScene'), { ssr: false });
 
-const tabs = [
-  { name: 'Debasis Maharana', role: 'Founder & Creative Director', i: 0 },
-  { name: 'G. Jayaditya', role: 'Technical Lead — Frontend', i: 1 },
-  { name: 'Dilip', role: 'AI & Automation Polymath', i: 2 },
+const roles = [
+  'Founder & Creative Director',
+  'Technical Lead — Frontend',
+  'AI & Automation Polymath',
 ];
 
-function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [rotate, setRotate] = useState({ x: 0, y: 0 });
-  const [hover, setHover] = useState(false);
-  const [offscreen] = useState(() =>
-    typeof window !== 'undefined' && ('ontouchstart' in window || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  );
-
-  const handleMouse = (e: React.MouseEvent) => {
-    if (offscreen) return;
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setRotate({ x: -y * 15, y: x * 15 });
-  };
-
-  return (
-    <div
-      ref={ref}
-      onMouseMove={handleMouse}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => { setHover(false); setRotate({ x: 0, y: 0 }); }}
-      className={`transition-transform duration-200 ease-out ${className || ''}`}
-      style={{ transform: hover ? `perspective(800px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)` : 'none' }}
-    >
-      {children}
-    </div>
-  );
-}
-
 export default function Team() {
-  const [active, setActive] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
-  const member = teamMembers[active];
-
-  const bio = [
-    `Creative force behind RockSpace. ${member.name} shapes brands that don't just look good — they feel inevitable. ${member.skills.slice(0, 3).join(', ')}.`,
-    `Architect of the web layer. ${member.name} transforms design into living, breathing interfaces — pixel-perfect and buttery smooth. ${member.skills.slice(0, 3).join(', ')}.`,
-    `Bridging creativity with systems. ${member.name} builds the engines that make RockSpace run — AI agents, workflows, data pipelines. ${member.skills.slice(0, 3).join(', ')}.`,
-  ][active];
 
   useGSAP(() => {
     const el = sectionRef.current;
     if (!el) return;
-    gsap.fromTo(el.querySelector('.team-content'), { opacity: 0, y: 40, scale: 0.97 }, {
-      opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power4.out',
-      scrollTrigger: { trigger: el, start: 'top 75%', once: true },
+    gsap.fromTo(el.querySelectorAll('.person'), { opacity: 0, y: 20 }, {
+      opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power4.out',
+      scrollTrigger: { trigger: el, start: 'top 80%', once: true },
     });
   }, { scope: sectionRef });
 
   return (
-    <section id="team" ref={sectionRef} className="relative py-28 md:py-36 px-6 bg-surface section-frame overflow-hidden">
-      <span className="section-number hidden lg:block">05</span>
-
+    <section id="team" ref={sectionRef} className="relative py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 bg-bg overflow-hidden">
+      <DottedBoundary />
+      <DotGrid spacing={24} dotSize={0.5} opacity={0.2} />
       <SceneGate>
-        <div className="absolute inset-0 pointer-events-none opacity-30">
+        <div className="absolute inset-0 pointer-events-none opacity-10">
           <Suspense fallback={null}>
-            <TeamScene persona={active} />
+            <TeamScene persona={0} />
           </Suspense>
         </div>
       </SceneGate>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-16 section-corner">
-          <p className="text-sm text-accent-dark tracking-[0.2em] uppercase mb-4 flex items-center gap-3">
-            <span className="w-8 h-px bg-accent-dark/40" />
-            <span className="font-hand text-base lowercase tracking-normal">the</span>
-            <span className="font-mono">team</span>
-          </p>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] text-text">
-            People<span className="text-accent">.</span>
-          </h2>
+        <div className="max-w-2xl mb-10 sm:mb-14">
+          <p className="text-[10px] sm:text-xs text-accent tracking-[0.2em] uppercase mb-2 sm:mb-3 font-mono">The people</p>
+          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Who we are<span className="text-accent">.</span></h2>
         </div>
 
-        <div className="team-content flex flex-col md:flex-row gap-10 md:gap-16">
-          <div className="flex flex-row md:flex-col gap-2 md:gap-1 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 shrink-0">
-            {tabs.map((tab) => (
-              <button
-                key={tab.i}
-                onClick={() => setActive(tab.i)}
-                className={`text-left px-4 md:px-5 py-3 rounded-xl border transition-all shrink-0 ${
-                  active === tab.i
-                    ? 'bg-accent-dark text-white border-accent-dark shadow-lg shadow-accent-dark/20'
-                    : 'border-border text-text-muted hover:border-accent/50 hover:text-text'
-                }`}
-              >
-                <div className="text-sm md:text-base font-semibold">{tab.name}</div>
-                <div className="text-[11px] md:text-xs opacity-70 mt-0.5 tracking-wide whitespace-nowrap">{tab.role}</div>
-              </button>
-            ))}
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="flex flex-col sm:flex-row gap-6 md:gap-10"
-              >
-                <TiltCard className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden shrink-0 shadow-lg shadow-accent-dark/10">
-                  <Image
-                    src={['/debasispfp.png', '/jayadityapfp.png', '/dilippfp.png'][active]}
-                    alt={member.name}
-                    width={144}
-                    height={144}
-                    className="w-full h-full object-cover"
-                  />
-                </TiltCard>
-                <div className="min-w-0">
-                  <p className="text-base md:text-lg text-text-muted leading-relaxed mb-5">{bio}</p>
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    {member.skills.map((skill) => (
-                      <span key={skill} className="px-3 py-1.5 text-xs font-mono bg-bg border border-border rounded-full text-text-muted">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex gap-6">
-                    {member.social.map((s) => (
-                      <a key={s.platform} href={s.url} target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-accent-dark transition-colors">
-                        {s.platform} ↗
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12">
+          {teamMembers.map((m, i) => (
+            <div key={m.name} className="person">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden mb-3 sm:mb-4 shadow-md ring-1 ring-border/50">
+                <Image
+                  src={['/debasispfp.png', '/jayadityapfp.png', '/dilippfp.png'][i]}
+                  alt={m.name}
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="font-display text-lg sm:text-xl font-[500] text-text">{m.name}</h3>
+              <p className="text-xs sm:text-sm text-text-muted mt-0.5">{roles[i]}</p>
+              <p className="text-xs sm:text-sm text-text-tertiary mt-2 sm:mt-3 leading-relaxed">{m.bio}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

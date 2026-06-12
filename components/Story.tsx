@@ -1,112 +1,83 @@
 'use client';
 
-import { useRef, useState, Suspense } from 'react';
+import { useRef, Suspense } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import dynamic from 'next/dynamic';
 import { SceneGate } from '@/lib/useInView';
+import DotGrid from '@/components/patterns/DotGrid';
+import DottedBoundary from '@/components/patterns/DottedBoundary';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const StoryScene = dynamic(() => import('@/components/scene/StoryScene'), { ssr: false });
 
 const beats = [
-  {
-    number: '01',
-    title: 'A classroom, a spark',
-    text: 'Three students. One elective. Debasis had the vision, Jayaditya the code, Dilip the systems. They built because they couldn\'t stop.',
-    accent: '#A78BFA',
-  },
-  {
-    number: '02',
-    title: 'Late nights, big ideas',
-    text: 'Dorm room → studio. Coffee → fuel. Websites for local shops, motion for festivals, tools for professors. Every failure was a shortcut.',
-    accent: '#7C3AED',
-  },
-  {
-    number: '03',
-    title: 'RockSpace was born',
-    text: 'No funding. No network. Just a belief that design + code + automation could make anything. They picked a name, built a brand, and never looked back.',
-    accent: '#FF8A65',
-  },
+  { number: '01', title: 'The one who couldn&rsquo;t stop building', text: 'Debasis would design in Figma, then build it himself. Not because he had to — because the gap between thinking and making bothered him.' },
+  { number: '02', title: 'The one who saw the grid in everything', text: 'Jayaditya doesn&rsquo;t just write code. He feels architecture. Components, systems, flows — he maps them before they exist.' },
+  { number: '03', title: 'The one who automated his own job', text: 'Dilip built a bot to do his work. Then he built another one. Then he realized the real job was building the bots.' },
 ];
 
 export default function Story() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [reduced] = useState(() =>
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  );
 
   useGSAP(() => {
-    if (reduced || !sectionRef.current) return;
+    if (!sectionRef.current) return;
     const cards = sectionRef.current.querySelectorAll('.story-card');
-    gsap.fromTo(
-      cards,
-      { opacity: 0, y: 80, scale: 0.95 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.2, stagger: 0.4, ease: 'power4.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 60%', end: 'bottom 40%', scrub: 1.2 } }
-    );
-    const nums = sectionRef.current.querySelectorAll('.story-number');
-    gsap.fromTo(nums, { opacity: 0, scale: 0.3, rotateZ: -15 }, {
-      opacity: 1, scale: 1, rotateZ: 0, duration: 0.8, stagger: 0.3, ease: 'back.out(2)',
-      scrollTrigger: { trigger: sectionRef.current, start: 'top 65%', once: true },
+    cards.forEach((card) => {
+      gsap.fromTo(card, { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, duration: 0.7, ease: 'power4.out',
+        scrollTrigger: { trigger: card, start: 'top 85%', once: true },
+      });
     });
-  }, { dependencies: [reduced], scope: sectionRef });
+    const pull = sectionRef.current.querySelector('.story-pull');
+    if (pull) {
+      gsap.fromTo(pull, { opacity: 0, y: 20 }, {
+        opacity: 1, y: 0, duration: 0.8, ease: 'power4.out',
+        scrollTrigger: { trigger: pull, start: 'top 85%', once: true },
+      });
+    }
+  }, { scope: sectionRef });
 
   return (
-    <section id="story" ref={sectionRef} className="relative py-32 md:py-40 px-6 bg-bg overflow-hidden section-frame">
-      <span className="section-number hidden lg:block">●</span>
-
+    <section id="story" ref={sectionRef} className="relative py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 bg-surface overflow-hidden">
+      <DottedBoundary />
+      <DotGrid spacing={20} dotSize={0.5} opacity={0.25} />
       <SceneGate>
-        <div className="absolute inset-0 pointer-events-none opacity-40">
+        <div className="absolute inset-0 pointer-events-none opacity-10">
           <Suspense fallback={null}>
             <StoryScene />
           </Suspense>
         </div>
       </SceneGate>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-accent-light/10 via-transparent to-accent-warm/10 pointer-events-none" />
-
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="max-w-3xl mb-20 md:mb-24 section-corner">
-          <p className="text-sm text-accent-dark tracking-[0.2em] uppercase mb-5 flex items-center gap-3">
-            <span className="w-8 h-px bg-accent-dark/40" />
-            <span className="font-hand text-base lowercase tracking-normal">the</span>
-            <span className="font-mono">origin story</span>
-          </p>
-          <h2 className="text-[clamp(3rem,7vw,6rem)] font-bold tracking-[-0.04em] leading-[1.05] text-text">
-            Built by <span className="text-gradient">classmates</span>
-            <span className="text-accent">.</span>
-          </h2>
+        <div className="max-w-2xl mb-10 sm:mb-14">
+          <p className="text-[10px] sm:text-xs text-accent tracking-[0.2em] uppercase mb-2 sm:mb-3 font-mono">How we met</p>
+          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Three paths collided<span className="text-accent">.</span></h2>
         </div>
 
-        <div className="relative space-y-28 md:space-y-36">
-          {beats.map((beat, i) => (
-            <div key={beat.number} className="story-card grid md:grid-cols-12 gap-8 md:gap-12 items-start relative">
-              <div className="md:col-span-5">
-                <div className="w-12 h-px mb-6" style={{ backgroundColor: beat.accent, opacity: 0.4 }} />
-                <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.03em] text-text mb-4">
-                  {beat.title}
-                </h3>
-              </div>
-
-              <div className="md:col-span-6 relative">
-                <span className="story-number absolute text-[5rem] font-bold leading-none select-none" style={{ color: beat.accent, opacity: 0.04, bottom: '-1.5rem', right: 0 }}>
+        <div className="space-y-10 sm:space-y-12 md:space-y-16">
+          {beats.map((beat) => (
+            <div key={beat.number} className="story-card grid md:grid-cols-12 gap-3 sm:gap-4 md:gap-8 items-start">
+              <div className="md:col-span-4 md:col-start-2">
+                <span className="font-display text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-[400] italic leading-none text-accent/15 select-none">
                   {beat.number}
                 </span>
-                <p className="text-xl md:text-2xl text-text-muted leading-relaxed">{beat.text}</p>
-                {i < beats.length - 1 && (
-                  <div className="mt-8 flex items-center gap-3">
-                    <span className="w-6 h-px bg-accent/30" />
-                    <span className="text-[10px] font-mono text-text-tertiary tracking-widest">
-                      {String(i + 2).padStart(2, '0')}
-                    </span>
-                  </div>
-                )}
+                <h3 className="font-display text-base sm:text-lg md:text-xl font-[500] tracking-[-0.02em] text-text mt-1">{beat.title}</h3>
+              </div>
+              <div className="md:col-span-5">
+                <p className="text-sm sm:text-base text-text-muted leading-relaxed">{beat.text}</p>
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="story-pull mt-16 sm:mt-20 md:mt-24 text-center">
+          <p className="font-display text-lg sm:text-xl md:text-2xl font-[400] italic text-text-muted max-w-2xl mx-auto leading-relaxed px-4">
+            &ldquo;RockSpace isn&rsquo;t a studio. It&rsquo;s what happens when three people stop asking for permission.&rdquo;
+          </p>
         </div>
       </div>
     </section>
