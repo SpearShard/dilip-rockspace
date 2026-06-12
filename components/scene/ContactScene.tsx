@@ -23,7 +23,7 @@ function DotField() {
 
   useFrame(({ clock }) => {
     if (!ref.current) return;
-    ref.current.rotation.y = clock.getElapsedTime() * 0.02;
+    ref.current.rotation.y = clock.elapsedTime * 0.02;
   });
 
   return (

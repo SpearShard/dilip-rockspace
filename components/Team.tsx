@@ -82,11 +82,12 @@ export default function Team() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-16 section-corner">
-          <p className="text-xs font-mono text-accent-dark tracking-[0.2em] uppercase mb-4 flex items-center gap-3">
+          <p className="text-sm text-accent-dark tracking-[0.2em] uppercase mb-4 flex items-center gap-3">
             <span className="w-8 h-px bg-accent-dark/40" />
-            The team
+            <span className="font-hand text-base lowercase tracking-normal">the</span>
+            <span className="font-mono">team</span>
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] text-text">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] text-text">
             People<span className="text-accent">.</span>
           </h2>
         </div>

@@ -46,6 +46,11 @@ export default function Story() {
       { opacity: 1, y: 0, scale: 1, duration: 1.2, stagger: 0.4, ease: 'power4.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 60%', end: 'bottom 40%', scrub: 1.2 } }
     );
+    const nums = sectionRef.current.querySelectorAll('.story-number');
+    gsap.fromTo(nums, { opacity: 0, scale: 0.3, rotateZ: -15 }, {
+      opacity: 1, scale: 1, rotateZ: 0, duration: 0.8, stagger: 0.3, ease: 'back.out(2)',
+      scrollTrigger: { trigger: sectionRef.current, start: 'top 65%', once: true },
+    });
   }, { dependencies: [reduced], scope: sectionRef });
 
   return (
@@ -62,11 +67,12 @@ export default function Story() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="max-w-3xl mb-20 md:mb-24 section-corner">
-          <p className="text-xs font-mono text-accent-dark tracking-[0.2em] uppercase mb-5 flex items-center gap-3">
+          <p className="text-sm text-accent-dark tracking-[0.2em] uppercase mb-5 flex items-center gap-3">
             <span className="w-8 h-px bg-accent-dark/40" />
-            The origin story
+            <span className="font-hand text-base lowercase tracking-normal">the</span>
+            <span className="font-mono">origin story</span>
           </p>
-          <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold tracking-[-0.04em] leading-[1.05] text-text">
+          <h2 className="text-[clamp(3rem,7vw,6rem)] font-bold tracking-[-0.04em] leading-[1.05] text-text">
             Built by <span className="text-gradient">classmates</span>
             <span className="text-accent">.</span>
           </h2>
@@ -75,12 +81,6 @@ export default function Story() {
         <div className="relative space-y-28 md:space-y-36">
           {beats.map((beat, i) => (
             <div key={beat.number} className="story-card grid md:grid-cols-12 gap-8 md:gap-12 items-start relative">
-              <div className="hidden md:block md:col-span-1 relative">
-                <span className="absolute text-[7rem] font-bold leading-none select-none" style={{ color: beat.accent, opacity: 0.06, top: '-2rem', left: '-1rem' }}>
-                  {beat.number}
-                </span>
-              </div>
-
               <div className="md:col-span-5">
                 <div className="w-12 h-px mb-6" style={{ backgroundColor: beat.accent, opacity: 0.4 }} />
                 <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.03em] text-text mb-4">
@@ -88,8 +88,11 @@ export default function Story() {
                 </h3>
               </div>
 
-              <div className="md:col-span-6">
-                <p className="text-base md:text-lg text-text-muted leading-relaxed">{beat.text}</p>
+              <div className="md:col-span-6 relative">
+                <span className="story-number absolute text-[5rem] font-bold leading-none select-none" style={{ color: beat.accent, opacity: 0.04, bottom: '-1.5rem', right: 0 }}>
+                  {beat.number}
+                </span>
+                <p className="text-xl md:text-2xl text-text-muted leading-relaxed">{beat.text}</p>
                 {i < beats.length - 1 && (
                   <div className="mt-8 flex items-center gap-3">
                     <span className="w-6 h-px bg-accent/30" />

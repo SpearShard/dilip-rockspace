@@ -2,7 +2,7 @@
 
 import { useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Environment, Float } from '@react-three/drei';
+import { Environment } from '@react-three/drei';
 import FloatingGeometry from './FloatingGeometry';
 import ParticleField from './ParticleField';
 
@@ -22,9 +22,7 @@ export default function HeroScene() {
         style={{ background: 'transparent' }}
       >
         <Suspense fallback={null}>
-          <Float speed={0.5} rotationIntensity={0.1} floatIntensity={0.5}>
-            <FloatingGeometry />
-          </Float>
+          <FloatingGeometry />
           <ParticleField />
           <Environment preset="studio" />
           <ambientLight intensity={0.8} />

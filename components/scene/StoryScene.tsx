@@ -10,7 +10,7 @@ function MorphingShape() {
 
   useFrame(({ clock }) => {
     if (!meshRef.current) return;
-    const t = clock.getElapsedTime();
+    const t = clock.elapsedTime;
     clockRef.current = t;
 
     meshRef.current.rotation.x = t * 0.2;

@@ -47,13 +47,14 @@ export default function Contact() {
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="section-corner max-w-3xl">
-          <p className="text-xs font-mono text-accent-dark tracking-[0.2em] uppercase mb-6 flex items-center gap-3">
+          <p className="text-sm text-accent-dark tracking-[0.2em] uppercase mb-6 flex items-center gap-3">
             <span className="w-8 h-px bg-accent-dark/40" />
-            Get in touch
+            <span className="font-hand text-base lowercase tracking-normal">get in</span>
+            <span className="font-mono">touch</span>
           </p>
 
-          <h2 ref={headingRef} className="text-[clamp(2.5rem,8vw,6rem)] font-bold tracking-[-0.04em] leading-[1.0] text-text max-w-4xl mb-6">
-            Let&apos;s build something <span className="text-gradient">great</span>.
+          <h2 ref={headingRef} className="text-[clamp(3rem,9vw,7rem)] font-bold tracking-[-0.04em] leading-[1.0] text-text max-w-4xl mb-6">
+            Let&apos;s build something <span className="text-shimmer">great</span>.
           </h2>
 
           <div ref={contentRef}>

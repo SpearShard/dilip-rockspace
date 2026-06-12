@@ -9,7 +9,7 @@ function Ring() {
 
   useFrame(({ clock }) => {
     if (!ref.current) return;
-    const t = clock.getElapsedTime();
+    const t = clock.elapsedTime;
     ref.current.rotation.x = Math.sin(t * 0.2) * 0.3;
     ref.current.rotation.y = t * 0.15;
     ref.current.position.y = Math.sin(t * 0.4) * 0.15;
@@ -34,7 +34,7 @@ function Ring2() {
 
   useFrame(({ clock }) => {
     if (!ref.current) return;
-    const t = clock.getElapsedTime();
+    const t = clock.elapsedTime;
     ref.current.rotation.x = Math.sin(t * 0.15 + 1) * 0.4;
     ref.current.rotation.y = -t * 0.1;
     ref.current.position.y = Math.sin(t * 0.3 + 1) * 0.2;

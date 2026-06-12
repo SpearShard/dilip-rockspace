@@ -33,7 +33,7 @@ function ServiceCard({ s }: { s: typeof services[number] }) {
     <div
       ref={ref}
       onMouseMove={handleMouse}
-      className="group relative p-8 rounded-2xl border border-border bg-surface/80 backdrop-blur-sm transition-all duration-500 h-full overflow-hidden cursor-default"
+      className="card-border corner-bracket group relative p-8 rounded-2xl border border-border bg-surface/80 backdrop-blur-sm transition-all duration-500 h-full overflow-hidden cursor-default"
     >
       <div
         className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -42,9 +42,12 @@ function ServiceCard({ s }: { s: typeof services[number] }) {
         }}
       />
       <div className="relative z-10">
-        <span className="text-[10px] font-mono text-accent-dark tracking-wider uppercase">{s.tag}</span>
+        <span className="text-[10px] font-mono text-accent-dark tracking-wider uppercase flex items-center gap-2">
+          {s.tag}
+          <span className="w-1 h-1 rounded-full bg-accent-dark/40 animate-pulse" />
+        </span>
         <h3 className="text-xl font-semibold text-text mt-4 mb-3 group-hover:text-accent-dark transition-colors">{s.title}</h3>
-        <p className="text-sm text-text-muted leading-relaxed">{s.desc}</p>
+        <p className="text-base text-text-muted leading-relaxed">{s.desc}</p>
       </div>
     </div>
   );
@@ -71,11 +74,12 @@ export default function Services() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-16 section-corner">
-          <p className="text-xs font-mono text-accent-dark tracking-[0.2em] uppercase mb-4 flex items-center gap-3">
+          <p className="text-sm text-accent-dark tracking-[0.2em] uppercase mb-4 flex items-center gap-3">
             <span className="w-8 h-px bg-accent-dark/40" />
-            What we do
+            <span className="font-hand text-base lowercase tracking-normal">what</span>
+            <span className="font-mono">we do</span>
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] text-text">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] text-text">
             Services<span className="text-accent">.</span>
           </h2>
         </div>

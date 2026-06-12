@@ -15,20 +15,21 @@ function seededRandom(seed: number) {
 export default function ParticleField({ scroll = 0 }: { scroll?: number }) {
   const pointsRef = useRef<THREE.Points>(null);
 
-  const [positions, colors] = useMemo(() => {
+  const [positions, colors, sizes] = useMemo(() => {
     const count = 1200;
     const pos = new Float32Array(count * 3);
     const col = new Float32Array(count * 3);
+    const siz = new Float32Array(count);
     const palette = [
-      new THREE.Color('#A78BFA'),
-      new THREE.Color('#7C3AED'),
-      new THREE.Color('#DDD6FE'),
-      new THREE.Color('#FF8A65'),
+      new THREE.Color('#FFFFFF'),
+      new THREE.Color('#CCFF00'),
+      new THREE.Color('#E0E0E0'),
+      new THREE.Color('#A8FF00'),
     ];
     const rng = seededRandom(42);
 
     for (let i = 0; i < count; i++) {
-      const radius = 2 + rng() * 6;
+      const radius = 2 + rng() * 8;
       const theta = rng() * Math.PI * 2;
       const phi = Math.acos(2 * rng() - 1);
 
@@ -40,15 +41,17 @@ export default function ParticleField({ scroll = 0 }: { scroll?: number }) {
       col[i * 3] = c.r;
       col[i * 3 + 1] = c.g;
       col[i * 3 + 2] = c.b;
+
+      siz[i] = 0.015 + rng() * 0.04;
     }
-    return [pos, col];
+    return [pos, col, siz];
   }, []);
 
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
-    const t = clock.getElapsedTime();
-    pointsRef.current.rotation.y = t * 0.03 + scroll * 0.001;
-    pointsRef.current.rotation.x = Math.sin(t * 0.02) * 0.1;
+    const t = clock.elapsedTime;
+    pointsRef.current.rotation.y = t * 0.02 + scroll * 0.001;
+    pointsRef.current.rotation.x = Math.sin(t * 0.015) * 0.08;
   });
 
   return (
@@ -62,12 +65,16 @@ export default function ParticleField({ scroll = 0 }: { scroll?: number }) {
           attach="attributes-color"
           args={[colors, 3]}
         />
+        <bufferAttribute
+          attach="attributes-size"
+          args={[sizes, 1]}
+        />
       </bufferGeometry>
       <pointsMaterial
-        size={0.04}
+        size={0.03}
         vertexColors
         transparent
-        opacity={0.6}
+        opacity={0.7}
         sizeAttenuation
         depthWrite={false}
         blending={THREE.AdditiveBlending}

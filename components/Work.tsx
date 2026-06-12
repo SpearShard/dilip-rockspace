@@ -22,7 +22,7 @@ function ProjectCard({ project, isHero }: { project: typeof projects[number]; is
         ref={ref}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        className="group relative overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-500 cursor-pointer"
+        className="card-border group relative overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-500 cursor-pointer"
         style={{
           transform: hover ? 'translateY(-6px)' : 'translateY(0)',
           boxShadow: hover ? '0 20px 40px -12px rgba(124,58,237,0.15)' : '0 0 0 0 transparent',
@@ -54,7 +54,7 @@ function ProjectCard({ project, isHero }: { project: typeof projects[number]; is
               <p className="text-xs text-text-muted/70 font-mono mt-0.5">{project.subtitle}</p>
             </div>
             <span className="shrink-0 w-9 h-9 rounded-full border border-border flex items-center justify-center text-text-muted group-hover:border-accent-dark group-hover:text-accent-dark group-hover:bg-accent-light/20 transition-all duration-300">
-              →
+              <span className="arrow-bounce">→</span>
             </span>
           </div>
           <p className="text-sm text-text-muted mt-3 leading-relaxed line-clamp-2">{project.description}</p>
@@ -77,6 +77,13 @@ export default function Work() {
       opacity: 1, y: 0, duration: 0.7, stagger: 0.05, ease: 'power3.out',
       scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true },
     });
+    const pills = sectionRef.current?.querySelectorAll('.filter-pill');
+    if (pills?.length) {
+      gsap.fromTo(pills, { opacity: 0, y: 10 }, {
+        opacity: 1, y: 0, duration: 0.4, stagger: 0.04, ease: 'power2.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true },
+      });
+    }
   }, { dependencies: [filter], scope: sectionRef });
 
   return (
@@ -90,8 +97,8 @@ export default function Work() {
             <span className="w-8 h-px bg-accent-dark/40" />
             Our work
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] text-text">
-            Projects<span className="text-accent">.</span>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] text-text">
+            <span className="text-shimmer">Projects</span><span className="text-accent">.</span>
           </h2>
         </div>
 
@@ -100,7 +107,7 @@ export default function Work() {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-4 py-2 text-sm rounded-full border transition-all duration-300 ${
+              className={`filter-pill px-4 py-2 text-sm rounded-full border transition-all duration-300 ${
                 filter === cat
                   ? 'bg-accent-dark text-white border-accent-dark shadow-lg shadow-accent-dark/20 scale-[1.02]'
                   : 'border-border text-text-muted hover:border-accent/50 hover:text-text hover:scale-[1.02]'

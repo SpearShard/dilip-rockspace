@@ -26,7 +26,7 @@ function DesignScene() {
 
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
-    const t = clock.getElapsedTime();
+    const t = clock.elapsedTime;
     groupRef.current.rotation.z = t * 0.05;
     groupRef.current.rotation.x = Math.sin(t * 0.03) * 0.1;
   });
@@ -71,8 +71,8 @@ function CodeScene() {
 
   useFrame(({ clock }) => {
     if (!ref.current) return;
-    ref.current.rotation.y = clock.getElapsedTime() * 0.04;
-    ref.current.rotation.x = Math.sin(clock.getElapsedTime() * 0.02) * 0.05;
+    ref.current.rotation.y = clock.elapsedTime * 0.04;
+    ref.current.rotation.x = Math.sin(clock.elapsedTime * 0.02) * 0.05;
   });
 
   return (
@@ -101,7 +101,7 @@ function AutomationScene() {
 
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
-    const t = clock.getElapsedTime();
+    const t = clock.elapsedTime;
     groupRef.current.rotation.z = t * 0.03;
     groupRef.current.rotation.y = Math.sin(t * 0.02) * 0.1;
   });

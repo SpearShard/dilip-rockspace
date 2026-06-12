@@ -38,8 +38,8 @@ function PhaseNode({ phase }: { phase: typeof phases[number] }) {
       <div className="relative mb-6">
         <svg width="56" height="56" viewBox="0 0 56 56" className="transition-transform duration-500 group-hover:scale-110">
           <circle cx="28" cy="28" r="26" fill="none" stroke={phase.color} strokeWidth="1" strokeOpacity="0.3" />
-          <circle cx="28" cy="28" r="20" fill={phase.color} fillOpacity="0.06" />
-          <text ref={numRef} x="28" y="28" textAnchor="middle" dominantBaseline="central" fill={phase.color} fillOpacity="0.5" fontSize="18" fontFamily="var(--font-mono)" fontWeight="700">
+          <circle cx="28" cy="28" r="20" fill={phase.color} fillOpacity="0.12" />
+          <text ref={numRef} x="28" y="28" textAnchor="middle" dominantBaseline="central" fill={phase.color} fillOpacity="0.85" fontSize="20" fontFamily="var(--font-mono)" fontWeight="700">
             {phase.id}
           </text>
         </svg>
@@ -86,14 +86,15 @@ export default function Process() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="max-w-2xl mb-20 section-corner">
-          <p className="text-xs font-mono text-accent-dark tracking-[0.2em] uppercase mb-4 flex items-center gap-3">
+          <p className="text-sm text-accent-dark tracking-[0.2em] uppercase mb-4 flex items-center gap-3">
             <span className="w-8 h-px bg-accent-dark/40" />
-            From spark to launch
+            <span className="font-hand text-base lowercase tracking-normal">from spark</span>
+            <span className="font-mono">to launch</span>
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] text-text">
-            How ideas become <span className="text-gradient">reality</span><span className="text-accent">.</span>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] text-text">
+            How ideas become <span className="text-shimmer">reality</span><span className="text-accent">.</span>
           </h2>
-          <p className="text-base text-text-muted mt-4 max-w-md leading-relaxed">
+          <p className="text-lg text-text-muted mt-4 max-w-md leading-relaxed">
             Four movements. One rhythm. Every project flows through the same proven arc — from raw insight to living product.
           </p>
         </div>
