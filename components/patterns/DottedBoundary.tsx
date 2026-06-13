@@ -34,17 +34,17 @@ export default function DottedBoundary({
     <>
       <svg
         ref={leftRef}
-        className={`boundary-line absolute top-0 left-0 md:left-10 h-full w-3 overflow-visible opacity-0 ${className}`}
+        className={`boundary-line absolute top-0 -left-3 md:-left-4 h-[calc(100%+4px)] w-3 overflow-visible opacity-0 ${className}`}
         aria-hidden="true"
       >
-        <line x1="10" y1="0" x2="10" y2="100%" stroke={color} strokeWidth={strokeWidth} strokeDasharray={dash} strokeLinecap="round" />
+        <line x1="6" y1="0" x2="6" y2="100%" stroke={color} strokeWidth={strokeWidth} strokeDasharray={dash} strokeLinecap="round" />
       </svg>
       <svg
         ref={rightRef}
-        className={`boundary-line absolute top-0 right-0 md:right-10 h-full w-3 overflow-visible opacity-0 ${className}`}
+        className={`boundary-line absolute top-0 -right-3 md:-right-4 h-[calc(100%+4px)] w-3 overflow-visible opacity-0 ${className}`}
         aria-hidden="true"
       >
-        <line x1="0" y1="0" x2="0" y2="100%" stroke={color} strokeWidth={strokeWidth} strokeDasharray={dash} strokeLinecap="round" />
+        <line x1="6" y1="0" x2="6" y2="100%" stroke={color} strokeWidth={strokeWidth} strokeDasharray={dash} strokeLinecap="round" />
       </svg>
     </>
   );

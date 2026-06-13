@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Lenis from '@studio-freight/lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -8,7 +8,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
+  const inited = useRef(false);
+
   useEffect(() => {
+    if (inited.current) return;
+    inited.current = true;
+
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch) return;
+
     const lenis = new Lenis({
       duration: 0.8,
       easing: (t) => 1 - Math.pow(1 - t, 3),
@@ -16,7 +24,7 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 0.8,
-      touchMultiplier: 1.0,
+      touchMultiplier: 0,
     });
 
     lenis.on('scroll', ScrollTrigger.update);

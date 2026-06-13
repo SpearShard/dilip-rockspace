@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Fraunces, DM_Sans, JetBrains_Mono } from 'next/font/google';
+import { Fraunces, DM_Sans, JetBrains_Mono, Caveat } from 'next/font/google';
 import './globals.css';
 import LenisProvider from '@/components/LenisProvider';
 
@@ -24,6 +24,13 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500', '700'],
 });
 
+const caveat = Caveat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-hand',
+  weight: ['400', '500', '600', '700'],
+});
+
 export const metadata: Metadata = {
   title: 'ROCKSPACE — collision, not a company',
   description: 'Three people. Three disciplines. One crash. Design, code, systems — from Bengaluru.',
@@ -31,7 +38,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${dmSans.className} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${dmSans.className} ${jetbrainsMono.variable} ${caveat.variable}`}>
       <body>
         <LenisProvider>
           {children}

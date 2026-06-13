@@ -1,83 +1,221 @@
 'use client';
 
-import { useRef, Suspense } from 'react';
+import { useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import dynamic from 'next/dynamic';
-import { SceneGate } from '@/lib/useInView';
-import DotGrid from '@/components/patterns/DotGrid';
 import DottedBoundary from '@/components/patterns/DottedBoundary';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const StoryScene = dynamic(() => import('@/components/scene/StoryScene'), { ssr: false });
-
-const beats = [
-  { number: '01', title: 'The one who couldn&rsquo;t stop building', text: 'Debasis would design in Figma, then build it himself. Not because he had to — because the gap between thinking and making bothered him.' },
-  { number: '02', title: 'The one who saw the grid in everything', text: 'Jayaditya doesn&rsquo;t just write code. He feels architecture. Components, systems, flows — he maps them before they exist.' },
-  { number: '03', title: 'The one who automated his own job', text: 'Dilip built a bot to do his work. Then he built another one. Then he realized the real job was building the bots.' },
+const originals = [
+  {
+    id: 'dm',
+    name: 'Debasis',
+    quote: 'Got tired of handing off Figma files. So I learned to build them myself.',
+    role: 'Design → Code',
+    tags: ['Typography', 'Motion', 'Systems'],
+    rotate: -2,
+    pinColor: '#D96C4A',
+  },
+  {
+    id: 'gj',
+    name: 'Jayaditya',
+    quote: 'Components before code. Systems before screens. I draw the grid before anyone sees the page.',
+    role: 'Architecture → Interface',
+    tags: ['React', 'WebGL', 'Performance'],
+    rotate: 1.5,
+    pinColor: '#7C3AED',
+  },
+  {
+    id: 'dp',
+    name: 'Dilip',
+    quote: 'Built a bot to do my job. Then another. Turns out the real job was building the bots.',
+    role: 'Automation → Abstraction',
+    tags: ['Agents', 'Pipelines', 'APIs'],
+    rotate: -1,
+    pinColor: '#E8B84B',
+  },
 ];
 
 export default function Story() {
   const sectionRef = useRef<HTMLElement>(null);
+  const threadRef = useRef<SVGPathElement>(null);
+  const scribbleRef = useRef<SVGEllipseElement>(null);
 
   useGSAP(() => {
-    if (!sectionRef.current) return;
-    const cards = sectionRef.current.querySelectorAll('.story-card');
-    cards.forEach((card) => {
-      gsap.fromTo(card, { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.7, ease: 'power4.out',
-        scrollTrigger: { trigger: card, start: 'top 85%', once: true },
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const notes = el.querySelectorAll('.origin-note');
+    const thread = threadRef.current;
+    const scribble = scribbleRef.current;
+
+    gsap.set(notes, { opacity: 0, y: 30, scale: 0.92, rotate: (i) => originals[i].rotate });
+
+    notes.forEach((note, i) => {
+      ScrollTrigger.create({
+        trigger: note,
+        start: 'top 88%',
+        once: true,
+        onEnter: () => {
+          gsap.to(note, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.7,
+            ease: 'back.out(1.4)',
+            delay: i * 0.2,
+          });
+        },
       });
     });
-    const pull = sectionRef.current.querySelector('.story-pull');
-    if (pull) {
-      gsap.fromTo(pull, { opacity: 0, y: 20 }, {
-        opacity: 1, y: 0, duration: 0.8, ease: 'power4.out',
-        scrollTrigger: { trigger: pull, start: 'top 85%', once: true },
+
+    if (thread) {
+      gsap.set(thread, { strokeDashoffset: 600 });
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 70%',
+        end: 'bottom 40%',
+        once: true,
+        onEnter: () => {
+          gsap.to(thread, {
+            strokeDashoffset: 0,
+            duration: 2.2,
+            ease: 'power3.inOut',
+          });
+        },
+      });
+    }
+
+    if (scribble) {
+      gsap.set(scribble, { strokeDashoffset: 200 });
+      ScrollTrigger.create({
+        trigger: el!.querySelector('.pull-quote'),
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          gsap.to(scribble, {
+            strokeDashoffset: 0,
+            duration: 1.5,
+            ease: 'power2.inOut',
+          });
+        },
       });
     }
   }, { scope: sectionRef });
 
   return (
-    <section id="story" ref={sectionRef} className="relative py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 bg-surface overflow-hidden">
-      <DottedBoundary />
-      <DotGrid spacing={20} dotSize={0.5} opacity={0.25} />
-      <SceneGate>
-        <div className="absolute inset-0 pointer-events-none opacity-10">
-          <Suspense fallback={null}>
-            <StoryScene />
-          </Suspense>
-        </div>
-      </SceneGate>
+    <section id="story" ref={sectionRef} className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-[#F8F6F4] overflow-hidden paper-texture">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="relative max-w-5xl mx-auto">
+          <DottedBoundary dash="8,8" />
+          <div className="relative z-10 px-6 md:px-10 py-6">
+            <div className="mb-14 sm:mb-18 md:mb-22 max-w-2xl">
+              <p className="font-hand text-2xl sm:text-3xl text-accent mb-1" style={{ transform: 'rotate(-0.5deg)' }}>
+                The origin
+              </p>
+              <h2 className="section-title wavy-underline">
+                Three paths collided<span className="text-accent">.</span>
+              </h2>
+            </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="max-w-2xl mb-10 sm:mb-14">
-          <p className="text-[10px] sm:text-xs text-accent tracking-[0.2em] uppercase mb-2 sm:mb-3 font-mono">How we met</p>
-          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Three paths collided<span className="text-accent">.</span></h2>
-        </div>
+            <div className="relative">
+              <svg
+                className="absolute left-[5%] md:left-[10%] top-[5%] w-[90%] md:w-[80%] h-[85%] pointer-events-none z-0"
+                viewBox="0 0 800 600"
+                preserveAspectRatio="xMidYMid meet"
+                aria-hidden="true"
+              >
+                <path
+                  ref={threadRef}
+                  d="M120,80 C250,20 300,150 400,120 C500,90 480,250 550,220 C620,190 600,350 680,320"
+                  stroke="var(--color-border)"
+                  strokeWidth="1.5"
+                  fill="none"
+                  strokeDasharray="600"
+                  strokeLinecap="round"
+                  opacity="0.4"
+                />
+              </svg>
 
-        <div className="space-y-10 sm:space-y-12 md:space-y-16">
-          {beats.map((beat) => (
-            <div key={beat.number} className="story-card grid md:grid-cols-12 gap-3 sm:gap-4 md:gap-8 items-start">
-              <div className="md:col-span-4 md:col-start-2">
-                <span className="font-display text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-[400] italic leading-none text-accent/15 select-none">
-                  {beat.number}
-                </span>
-                <h3 className="font-display text-base sm:text-lg md:text-xl font-[500] tracking-[-0.02em] text-text mt-1">{beat.title}</h3>
-              </div>
-              <div className="md:col-span-5">
-                <p className="text-sm sm:text-base text-text-muted leading-relaxed">{beat.text}</p>
+              <div className="relative z-10 flex flex-col md:flex-row items-start gap-8 md:gap-6 lg:gap-10">
+                {originals.map((o) => (
+                  <div
+                    key={o.id}
+                    className="origin-note sticky-note w-full md:w-1/3 rounded-xl p-6 sm:p-7"
+                    style={{ transform: `rotate(${o.rotate}deg)`, opacity: 0 }}
+                  >
+                    <div className="flex items-start gap-3 mb-3">
+                      <div
+                        className="w-3 h-3 rounded-full mt-1 shrink-0 shadow-sm"
+                        style={{ background: o.pinColor }}
+                      />
+                      <h3 className="font-hand text-2xl sm:text-3xl text-text leading-none">
+                        {o.name}
+                      </h3>
+                    </div>
+
+                    <p className="font-hand text-xl sm:text-2xl text-text-muted leading-relaxed mb-4">
+                      &ldquo;{o.quote}&rdquo;
+                    </p>
+
+                    <div className="flex items-center gap-2 text-xs font-mono text-text-tertiary tracking-[0.1em] uppercase">
+                      <span className="opacity-50">{'//'}</span>
+                      <span>{o.role}</span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-border/20">
+                      {o.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="text-[10px] font-mono px-1.5 py-0.5 bg-white/40 rounded-sm text-text-tertiary"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
 
-        <div className="story-pull mt-16 sm:mt-20 md:mt-24 text-center">
-          <p className="font-display text-lg sm:text-xl md:text-2xl font-[400] italic text-text-muted max-w-2xl mx-auto leading-relaxed px-4">
-            &ldquo;RockSpace isn&rsquo;t a studio. It&rsquo;s what happens when three people stop asking for permission.&rdquo;
-          </p>
+            <div className="pull-quote relative mt-20 sm:mt-24 md:mt-28 text-center px-4">
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                viewBox="0 0 400 120"
+                preserveAspectRatio="xMidYMid meet"
+                aria-hidden="true"
+              >
+                <ellipse
+                  ref={scribbleRef}
+                  cx="200"
+                  cy="60"
+                  rx="190"
+                  ry="50"
+                  stroke="#D96C4A"
+                  strokeWidth="1.5"
+                  fill="none"
+                  strokeDasharray="200"
+                  strokeLinecap="round"
+                  opacity="0.2"
+                />
+              </svg>
+              <div className="max-w-2xl mx-auto relative">
+                <span className="font-hand text-[3rem] sm:text-[4rem] text-accent/10 leading-none block select-none" style={{ transform: 'rotate(-3deg)' }}>
+                  &amp;
+                </span>
+                <p className="font-hand text-2xl sm:text-3xl md:text-4xl text-text-muted mt-[-0.5em] leading-relaxed" style={{ transform: 'rotate(0.3deg)' }}>
+                  RockSpace isn&rsquo;t a studio. It&rsquo;s what happens when three people stop asking for permission.
+                </p>
+                <div className="flex justify-center gap-1 mt-4 opacity-30">
+                  <span className="w-2 h-2 rounded-full bg-text-tertiary" />
+                  <span className="w-2 h-2 rounded-full bg-text-tertiary" />
+                  <span className="w-2 h-2 rounded-full bg-text-tertiary" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
