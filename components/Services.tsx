@@ -156,7 +156,7 @@ export default function Services() {
 
             <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-border/20 text-center">
               <a
-                href="/work"
+                href="/sketchbook/work"
                 className="group inline-flex items-center gap-2.5 px-6 sm:px-8 py-3 sm:py-3.5 bg-accent text-white text-sm sm:text-base font-semibold rounded-full hover:bg-accent/90 transition-all shadow-lg shadow-accent/20 hover:shadow-accent/30 hover:-translate-y-0.5 active:translate-y-0"
               >
                 View projects
