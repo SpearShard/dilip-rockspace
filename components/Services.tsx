@@ -10,39 +10,33 @@ gsap.registerPlugin(ScrollTrigger);
 
 const offerings = [
   {
-    id: '01',
     title: 'Brand Identity',
-    desc: 'Visual systems, identity, language — design that speaks without words.',
+    desc: 'Visual systems, identity and language. Design that speaks without words.',
     tag: 'IDENTITY',
   },
   {
-    id: '02',
     title: 'Web Development',
-    desc: 'Sites, apps, WebGL — built to perform, built to last. Every pixel intentional.',
+    desc: 'Sites, apps and WebGL. Built to perform. Built to last. Every pixel has a purpose.',
     tag: 'ENGINEERING',
   },
   {
-    id: '03',
     title: 'AI & Automation',
-    desc: 'Agents, pipelines, workflows — systemize everything that can be systemized.',
+    desc: 'AI agents, automated pipelines and smart workflows. If it can be systemized, we do it.',
     tag: 'SYSTEMS',
   },
   {
-    id: '04',
     title: 'Motion & 3D',
-    desc: 'Animation, WebGL, spatial — production that stops the scroll.',
+    desc: 'Animation, WebGL and immersive spatial work. Production that stops the scroll.',
     tag: 'MOTION',
   },
   {
-    id: '05',
     title: 'Product Strategy',
-    desc: 'Positioning, architecture, roadmaps — the thinking before the making.',
+    desc: 'Positioning, architecture and roadmaps. The strategic thinking before the first pixel.',
     tag: 'STRATEGY',
   },
   {
-    id: '06',
     title: 'Narrative & Decks',
-    desc: 'Stories, decks, pitches — presentations that actually close.',
+    desc: 'Brand stories, investor decks and sales pitches. Presentations that actually close deals.',
     tag: 'COMMS',
   },
 ];
@@ -90,11 +84,16 @@ export default function Services() {
   }, { scope: sectionRef });
 
   return (
-    <section id="services" ref={sectionRef} className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-white overflow-hidden paper-texture">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="relative max-w-5xl mx-auto">
+    <section id="services" ref={sectionRef} className="relative bg-white overflow-hidden paper-texture">
+      <div className="hidden md:block absolute inset-y-0 left-1/2 pointer-events-none z-0" style={{ width: '64rem', marginLeft: '-32rem' }}>
+        <div className="relative h-full">
           <DottedBoundary dash="8,8" />
-          <div className="relative z-10 px-6 md:px-10 py-6">
+        </div>
+      </div>
+      <div className="py-16 sm:py-20 md:py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="relative max-w-5xl mx-auto">
+            <div className="relative z-10 px-6 md:px-10 py-6">
             <div className="mb-10 sm:mb-14 max-w-2xl">
               <p className="font-hand text-2xl sm:text-3xl text-text-tertiary mb-0.5 line-through decoration-accent/30 decoration-2" style={{ transform: 'rotate(-0.5deg)' }}>
                 Capabilities
@@ -110,7 +109,7 @@ export default function Services() {
             <div className="divide-y divide-border/20">
               {offerings.map((o) => (
                 <div
-                  key={o.id}
+                  key={o.title}
                   className="work-item flex items-start gap-5 sm:gap-6 py-5 sm:py-6 md:py-7"
                 >
                   <div className="check-circle shrink-0 mt-0.5">
@@ -135,10 +134,7 @@ export default function Services() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline gap-3 sm:gap-4 flex-wrap">
-                      <span className="font-hand text-xl text-text-tertiary opacity-50" style={{ transform: 'rotate(-0.5deg)' }}>
-                        {o.id}
-                      </span>
-                      <h3 className="work-title font-display text-xl sm:text-2xl md:text-3xl font-[600] tracking-[-0.02em] text-text">
+                      <h3 className="work-title font-display text-xl sm:text-2xl md:text-3xl font-[700] tracking-[-0.02em] text-text">
                         {o.title}
                       </h3>
                     </div>
@@ -156,8 +152,8 @@ export default function Services() {
 
             <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-border/20 text-center">
               <a
-                href="/sketchbook/work"
-                className="group inline-flex items-center gap-2.5 px-6 sm:px-8 py-3 sm:py-3.5 bg-accent text-white text-sm sm:text-base font-semibold rounded-full hover:bg-accent/90 transition-all shadow-lg shadow-accent/20 hover:shadow-accent/30 hover:-translate-y-0.5 active:translate-y-0"
+                href="/work"
+                className="group inline-flex items-center gap-2.5 px-6 sm:px-8 py-3 sm:py-3.5 bg-accent text-white text-sm sm:text-base font-bold rounded-full hover:bg-accent/90 transition-all shadow-lg shadow-accent/20 hover:shadow-accent/30 hover:-translate-y-0.5 active:translate-y-0"
               >
                 View projects
                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -168,6 +164,8 @@ export default function Services() {
           </div>
         </div>
       </div>
+      </div>
     </section>
   );
 }
+

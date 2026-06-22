@@ -154,7 +154,7 @@ export default function PillNav({
                 <Tag
                   {...props}
                   ref={(el) => { linksRef.current[i] = el; }}
-                  className="flex items-center px-2 sm:px-3 text-[10px] sm:text-[12px] font-semibold tracking-wide whitespace-nowrap rounded-full transition-colors duration-200 h-full"
+                  className="flex items-center px-2 sm:px-3 text-[10px] sm:text-[12px] font-bold tracking-wide whitespace-nowrap rounded-full transition-colors duration-200 h-full"
                   style={{
                     color: isActive ? resolvedPillTextColor : (isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)'),
                   }}

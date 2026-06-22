@@ -20,10 +20,10 @@
   --color-text-muted: #8A8074;
   --color-text-tertiary: #B0A89E;
 
-  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
-  --font-hand: "Caveat", "Segoe Print", cursive;
-  --font-display: "Fraunces", "Georgia", serif;
+  --font-sans: var(--font-ubuntu), "Ubuntu", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-ubuntu), "Ubuntu", "SF Mono", "Fira Code", monospace;
+  --font-hand: var(--font-ubuntu), "Ubuntu", cursive;
+  --font-display: var(--font-ubuntu), "Ubuntu", sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -37,6 +37,7 @@ html {
 body {
   color: var(--color-text);
   font-family: var(--font-sans);
+  font-weight: 500;
   background: var(--color-bg);
   overflow-x: hidden;
 }
@@ -59,7 +60,7 @@ img { max-width: 100%; height: auto; }
 
 .section-title {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--color-text);
   font-size: clamp(2.5rem, 6vw, 5rem);
@@ -91,6 +92,10 @@ img { max-width: 100%; height: auto; }
   background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 8 Q12.5 0 25 8 T50 8 T75 8 T100 8' stroke='%23D96C4A' fill='none' stroke-width='2' opacity='0.4'/%3E%3C/svg%3E") repeat-x;
   background-size: 60px 100%;
   pointer-events: none;
+}
+
+.font-hand {
+  font-weight: 600 !important;
 }
 
 .sticky-note {

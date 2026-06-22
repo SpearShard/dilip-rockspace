@@ -9,10 +9,10 @@ import DottedBoundary from '@/components/patterns/DottedBoundary';
 gsap.registerPlugin(ScrollTrigger);
 
 const stages = [
-  { id: '01', verb: 'Listen', desc: 'No briefs. No assumptions. Just conversation, context, and curiosity until the problem reveals itself.', note: 'discovery & research' },
-  { id: '02', verb: 'Shape', desc: 'Strategy, structure, creative direction — built entirely on what we heard. Nothing decorative.', note: 'strategy & architecture' },
-  { id: '03', verb: 'Build', desc: 'Design, dev, and motion in parallel. Every pixel and every line of code serves the same intent.', note: 'design & development' },
-  { id: '04', verb: 'Ship & Grow', desc: 'Launch. Listen. Learn. The end of one cycle is the beginning of the next.', note: 'launch & iteration' },
+  { id: '01', verb: 'Listen', desc: 'No templated briefs. No assumptions. Just real conversation until the true problem surfaces.', note: 'discovery & research' },
+  { id: '02', verb: 'Shape', desc: 'Strategy, structure and creative direction. Built entirely on what we heard. Nothing decorative. Everything functional.', note: 'strategy & architecture' },
+  { id: '03', verb: 'Build', desc: 'Design, development and motion in parallel. Every pixel and every line of code serves one unified intent.', note: 'design & development' },
+  { id: '04', verb: 'Ship & Grow', desc: 'Launch. Listen. Learn. Improve. The end of one cycle is the start of the next.', note: 'launch & iteration' },
 ];
 
 const connectorPaths = [
@@ -90,11 +90,16 @@ export default function Process() {
   }, { scope: sectionRef });
 
   return (
-    <section id="process" ref={sectionRef} className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-[#F8F6F4] overflow-hidden paper-texture">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="relative max-w-5xl mx-auto">
+    <section id="process" ref={sectionRef} className="relative bg-[#F8F6F4] overflow-hidden paper-texture">
+      <div className="hidden md:block absolute inset-y-0 left-1/2 pointer-events-none z-0" style={{ width: '64rem', marginLeft: '-32rem' }}>
+        <div className="relative h-full">
           <DottedBoundary dash="8,8" />
-          <div className="relative z-10 px-6 md:px-10 py-6">
+        </div>
+      </div>
+      <div className="py-16 sm:py-20 md:py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="relative max-w-5xl mx-auto">
+            <div className="relative z-10 px-6 md:px-10 py-6">
             <div className="mb-12 sm:mb-16 max-w-2xl">
               <p className="font-hand text-2xl sm:text-3xl text-accent mb-1" style={{ transform: 'rotate(0.5deg)' }}>
                 The process
@@ -189,12 +194,14 @@ export default function Process() {
                 />
               </svg>
               <p className="font-hand text-lg sm:text-xl text-text-tertiary pt-10" style={{ transform: 'rotate(-0.3deg)' }}>
-                Then we do it again — each time better.
+                Then we do it again. Better every time.
               </p>
             </div>
           </div>
         </div>
       </div>
+      </div>
     </section>
   );
 }
+

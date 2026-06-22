@@ -14,7 +14,6 @@ const originals = [
     name: 'Debasis',
     quote: 'Got tired of handing off Figma files. So I learned to build them myself.',
     role: 'Design → Code',
-    tags: ['Typography', 'Motion', 'Systems'],
     rotate: -2,
     pinColor: '#D96C4A',
   },
@@ -23,7 +22,6 @@ const originals = [
     name: 'Jayaditya',
     quote: 'Components before code. Systems before screens. I draw the grid before anyone sees the page.',
     role: 'Architecture → Interface',
-    tags: ['React', 'WebGL', 'Performance'],
     rotate: 1.5,
     pinColor: '#7C3AED',
   },
@@ -32,7 +30,6 @@ const originals = [
     name: 'Dilip',
     quote: 'Built a bot to do my job. Then another. Turns out the real job was building the bots.',
     role: 'Automation → Abstraction',
-    tags: ['Agents', 'Pipelines', 'APIs'],
     rotate: -1,
     pinColor: '#E8B84B',
   },
@@ -106,11 +103,16 @@ export default function Story() {
   }, { scope: sectionRef });
 
   return (
-    <section id="story" ref={sectionRef} className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-[#F8F6F4] overflow-hidden paper-texture">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="relative max-w-5xl mx-auto">
+    <section id="story" ref={sectionRef} className="relative bg-[#F8F6F4] overflow-hidden paper-texture">
+      <div className="hidden md:block absolute inset-y-0 left-1/2 pointer-events-none z-0" style={{ width: '64rem', marginLeft: '-32rem' }}>
+        <div className="relative h-full">
           <DottedBoundary dash="8,8" />
-          <div className="relative z-10 px-6 md:px-10 py-6">
+        </div>
+      </div>
+      <div className="py-16 sm:py-20 md:py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="relative max-w-5xl mx-auto">
+            <div className="relative z-10 px-6 md:px-10 py-6">
             <div className="mb-14 sm:mb-18 md:mb-22 max-w-2xl">
               <p className="font-hand text-2xl sm:text-3xl text-accent mb-1" style={{ transform: 'rotate(-0.5deg)' }}>
                 The origin
@@ -156,24 +158,12 @@ export default function Story() {
                       </h3>
                     </div>
 
-                    <p className="font-hand text-xl sm:text-2xl text-text-muted leading-relaxed mb-4">
+                    <p className="font-hand text-xl sm:text-xl text-text-muted leading-relaxed mb-4">
                       &ldquo;{o.quote}&rdquo;
                     </p>
 
-                    <div className="flex items-center gap-2 text-xs font-mono text-text-tertiary tracking-[0.1em] uppercase">
-                      <span className="opacity-50">{'//'}</span>
-                      <span>{o.role}</span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-border/20">
-                      {o.tags.map((t) => (
-                        <span
-                          key={t}
-                          className="text-[10px] font-mono px-1.5 py-0.5 bg-white/40 rounded-sm text-text-tertiary"
-                        >
-                          {t}
-                        </span>
-                      ))}
+                    <div className="text-xs font-mono text-text-tertiary tracking-[0.1em] uppercase">
+                      {o.role}
                     </div>
                   </div>
                 ))}
@@ -205,7 +195,7 @@ export default function Story() {
                 <span className="font-hand text-[3rem] sm:text-[4rem] text-accent/10 leading-none block select-none" style={{ transform: 'rotate(-3deg)' }}>
                   &amp;
                 </span>
-                <p className="font-hand text-2xl sm:text-3xl md:text-4xl text-text-muted mt-[-0.5em] leading-relaxed" style={{ transform: 'rotate(0.3deg)' }}>
+                <p className="font-hand text-2xl sm:text-2xl md:text-3xl text-text-muted mt-[-0.5em] leading-relaxed" style={{ transform: 'rotate(0.3deg)' }}>
                   RockSpace isn&rsquo;t a studio. It&rsquo;s what happens when three people stop asking for permission.
                 </p>
                 <div className="flex justify-center gap-1 mt-4 opacity-30">
@@ -218,6 +208,8 @@ export default function Story() {
           </div>
         </div>
       </div>
+      </div>
     </section>
   );
 }
+

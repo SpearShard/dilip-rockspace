@@ -15,15 +15,10 @@ gsap.registerPlugin(ScrollTrigger);
 const TeamScene = dynamic(() => import('@/components/scene/TeamScene'), { ssr: false });
 
 const rotations = [-1.5, 2, -1];
-const toolSets = [
-  ['figma', 'after fx', 'principle', 'craft'],
-  ['next.js', 'three.js', 'typescript', 'r3f'],
-  ['python', 'langchain', 'supabase', 'n8n'],
-];
 const notes = [
-  'Thinks in visual systems. If it doesn\'t feel right, he won\'t ship it.',
-  'Architects before he codes. The grid is his first draft.',
-  'Automated himself out of a job. Then built the replacement.',
+  'He thinks in visual systems. If it doesn\'t feel right, it doesn\'t ship.',
+  'He architects before he codes. The grid is the first draft.',
+  'He automated himself out of a job. Then built the replacement.',
 ];
 
 export default function Team() {
@@ -54,7 +49,13 @@ export default function Team() {
   }, { scope: sectionRef });
 
   return (
-    <section id="team" ref={sectionRef} className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-white overflow-hidden paper-texture">
+    <section id="team" ref={sectionRef} className="relative bg-white overflow-hidden paper-texture">
+      <div className="hidden md:block absolute inset-y-0 left-1/2 pointer-events-none z-0" style={{ width: '64rem', marginLeft: '-32rem' }}>
+        <div className="relative h-full">
+          <DottedBoundary dash="8,8" />
+        </div>
+      </div>
+
       <SceneGate>
         <div className="absolute inset-0 pointer-events-none opacity-6">
           <Suspense fallback={null}>
@@ -63,10 +64,10 @@ export default function Team() {
         </div>
       </SceneGate>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="relative max-w-5xl mx-auto">
-          <DottedBoundary dash="8,8" />
-          <div className="relative z-10 px-6 md:px-10 py-6">
+      <div className="py-16 sm:py-20 md:py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="relative max-w-5xl mx-auto">
+            <div className="relative z-10 px-6 md:px-10 py-6">
             <div className="mb-10 sm:mb-14 max-w-2xl">
               <p className="font-hand text-2xl sm:text-3xl text-accent mb-1" style={{ transform: 'rotate(0.3deg)' }}>
                 The people
@@ -95,11 +96,11 @@ export default function Team() {
 
                   <div className="px-0.5">
                     <div className="flex items-baseline gap-2">
-                      <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-[600] text-text">
+                      <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-[700] text-text">
                         {m.name}
                       </h3>
-                      <span className="font-hand text-base sm:text-lg text-text-tertiary opacity-50" style={{ transform: 'rotate(-1deg)' }}>
-                        {m.initials}
+                      <span className="text-xs sm:text-sm font-mono text-text-tertiary tracking-[0.1em] uppercase opacity-60">
+                        {m.role}
                       </span>
                     </div>
 
@@ -109,23 +110,14 @@ export default function Team() {
                       </p>
                     </div>
 
-                    <div className="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-border/15">
-                      {toolSets[i].map((t) => (
-                        <span
-                          key={t}
-                          className="font-hand text-sm sm:text-base text-text-tertiary opacity-60"
-                          style={{ transform: 'rotate(-0.5deg)' }}
-                        >
-                          #{t}
-                        </span>
-                      ))}
-                    </div>
+
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

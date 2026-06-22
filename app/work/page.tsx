@@ -47,7 +47,7 @@ export default function WorkPage() {
                   <p className="font-hand text-2xl sm:text-3xl text-accent mb-1" style={{ transform: 'rotate(-0.3deg)' }}>
                     Archive
                   </p>
-                  <h1 className="font-display font-[800] text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.03em] text-text leading-[1.1]">
+                  <h1 className="font-display font-[700] text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.03em] text-text leading-[1.1]">
                     Selected projects<span className="text-accent">.</span>
                   </h1>
                 </div>
@@ -96,7 +96,7 @@ export default function WorkPage() {
                                   <span className="font-hand text-sm text-text-tertiary opacity-40">
                                     {p.id}
                                   </span>
-                                  <h3 className="font-display text-base sm:text-lg font-[600] tracking-[-0.02em] text-text">
+                                  <h3 className="font-display text-base sm:text-lg font-[700] tracking-[-0.02em] text-text">
                                     {p.title}
                                   </h3>
                                 </div>
