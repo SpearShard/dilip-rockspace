@@ -11,7 +11,7 @@ const ubuntu = Ubuntu({
 });
 
 export const metadata: Metadata = {
-  title: 'ROCKSPACE, lets get started',
+  title: 'ROCKSPACE | Digital Avant-Garde',
   description: 'Three people. Three disciplines. One crash. Design, code, systems.',
 };
 
