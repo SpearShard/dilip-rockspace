@@ -245,7 +245,7 @@ export default function Nav() {
       <div
         ref={menuRef}
         className="hidden pointer-events-none fixed z-[60]"
-        style={{ top: 0, right: 0, width: 600, height: 480 }}
+        style={{ top: 0, right: 0, width: 'min(600px, calc(100vw - 32px))', height: 'min(480px, calc((100vw - 32px) * 0.8))' }}
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
