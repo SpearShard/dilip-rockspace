@@ -13,6 +13,7 @@ const ubuntu = Ubuntu({
 export const metadata: Metadata = {
   title: 'ROCKSPACE | Digital Avant-Garde',
   description: 'Three people. Three disciplines. One crash. Design, code, systems.',
+  icons: [{ rel: 'icon', url: '/favicon.png' }],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
