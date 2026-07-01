@@ -8,13 +8,11 @@ import Image from 'next/image';
 import { teamMembers } from '@/lib/projectData';
 import dynamic from 'next/dynamic';
 import { SceneGate } from '@/lib/useInView';
-import DottedBoundary from '@/components/patterns/DottedBoundary';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const TeamScene = dynamic(() => import('@/components/scene/TeamScene'), { ssr: false });
 
-const rotations = [-1.5, 2, -1];
 const notes = [
   'He thinks in visual systems. If it doesn\'t feel right, it doesn\'t ship.',
   'He architects before he codes. The grid is the first draft.',
@@ -28,7 +26,7 @@ export default function Team() {
     const el = sectionRef.current;
     if (!el) return;
 
-    const cards = el.querySelectorAll('.polaroid-card');
+    const cards = el.querySelectorAll('.team-card');
 
     cards.forEach((card, i) => {
       const tl = gsap.timeline({
@@ -39,85 +37,87 @@ export default function Team() {
         },
       });
 
-      tl.fromTo(card, { opacity: 0, y: 40, rotate: 0, scale: 0.92 }, {
-        opacity: 1, y: 0, rotate: rotations[i], scale: 1, duration: 0.7, ease: 'back.out(1.4)',
-      })
-      .fromTo(card.querySelectorAll('.bio-line'), { opacity: 0, x: -6 }, {
-        opacity: 1, x: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out',
-      }, '-=0.3');
+      tl.fromTo(card,
+        { opacity: 0, y: 40, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power3.out', delay: i * 0.12 }
+      )
+      .fromTo(card.querySelectorAll('.card-line'),
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: 'power2.out' },
+        '-=0.3'
+      );
     });
   }, { scope: sectionRef });
 
   return (
-    <section id="team" ref={sectionRef} className="relative bg-white overflow-hidden paper-texture">
-      <div className="hidden md:block absolute inset-y-0 left-1/2 pointer-events-none z-0" style={{ width: '64rem', marginLeft: '-32rem' }}>
-        <div className="relative h-full">
-          <DottedBoundary dash="8,8" />
-        </div>
-      </div>
-
+    <section id="team" ref={sectionRef} className="relative bg-surface overflow-hidden">
       <SceneGate>
-        <div className="absolute inset-0 pointer-events-none opacity-6">
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
           <Suspense fallback={null}>
             <TeamScene persona={0} />
           </Suspense>
         </div>
       </SceneGate>
 
-      <div className="py-16 sm:py-20 md:py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="relative max-w-5xl mx-auto">
-            <div className="relative z-10 px-6 md:px-10 py-6">
-            <div className="mb-10 sm:mb-14 max-w-2xl">
-              <p className="font-hand text-2xl sm:text-3xl text-accent mb-1" style={{ transform: 'rotate(0.3deg)' }}>
+      {/* Gradient accent */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] pointer-events-none -z-10 opacity-30">
+        <div className="absolute inset-0 bg-gradient-to-bl from-accent/5 via-transparent to-transparent rounded-full blur-3xl" />
+      </div>
+
+      <div className="py-24 sm:py-28 md:py-32">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-14 sm:mb-18">
+              <p className="font-mono text-xs sm:text-sm tracking-[0.2em] uppercase text-text-muted/50 mb-3 sm:mb-4">
                 The people
               </p>
-              <h2 className="section-title">
+              <h2 className="font-display font-[700] text-[clamp(2.2rem,6vw,4.5rem)] tracking-[-0.03em] text-text leading-[1.05]">
                 Behind the studio<span className="text-accent">.</span>
               </h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-6 md:gap-10 items-start">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-5 md:gap-6">
               {teamMembers.map((m, i) => (
                 <div
                   key={m.name}
-                  className="polaroid-card polaroid rounded-xl p-4 sm:p-5"
-                  style={{ transform: `rotate(${rotations[i]}deg)`, opacity: 0 }}
+                  className="team-card group relative bg-white/60 backdrop-blur-sm border border-border/20 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-500"
+                  style={{ opacity: 0 }}
                 >
-                  <div className="rounded-lg overflow-hidden mb-3 bg-[#F5F3F0]">
+                  {/* Image */}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-surface">
                     <Image
                       src={['/debasispfp.png', '/jayadityapfp.png', '/dilippfp.png'][i]}
                       alt={m.name}
-                      width={400}
-                      height={300}
-                      className="w-full h-44 sm:h-52 object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                      fill
+                      className="object-cover transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
 
-                  <div className="px-0.5">
-                    <div className="flex items-baseline gap-2">
-                      <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-[700] text-text">
+                  {/* Content */}
+                  <div className="p-5 sm:p-6">
+                    <div className="card-line flex items-baseline gap-2 mb-2">
+                      <h3 className="font-display text-xl sm:text-2xl font-[700] text-text tracking-[-0.02em]">
                         {m.name}
                       </h3>
-                      <span className="text-xs sm:text-sm font-mono text-text-tertiary tracking-[0.1em] uppercase opacity-60">
+                      <span className="text-[10px] sm:text-xs font-mono text-text-tertiary tracking-[0.1em] uppercase">
                         {m.role}
                       </span>
                     </div>
 
-                    <div className="space-y-0.5 mt-2 bio-line">
-                      <p className="font-hand text-base sm:text-lg text-text-muted leading-snug">
-                        {notes[i]}
-                      </p>
-                    </div>
-
-
+                    <p className="card-line text-sm sm:text-base text-text-muted leading-relaxed">
+                      {notes[i]}
+                    </p>
                   </div>
+
+                  {/* Hover accent ring */}
+                  <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-transparent group-hover:ring-accent/20 transition-all duration-500 pointer-events-none" />
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </div>
       </div>
     </section>
   );

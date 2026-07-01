@@ -1,10 +1,10 @@
 'use client';
 
 import { useRef } from 'react';
+import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import DottedBoundary from '@/components/patterns/DottedBoundary';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,6 +41,21 @@ const offerings = [
   },
 ];
 
+const cardSize = (i: number) => {
+  // Bento pattern: large | medium | small | medium | small | large
+  const sizes = ['lg', 'md', 'sm', 'md', 'sm', 'lg'];
+  return sizes[i];
+};
+
+const accentColors: Record<string, string> = {
+  IDENTITY: '#D96C4A',
+  ENGINEERING: '#7C3AED',
+  SYSTEMS: '#E8B84B',
+  MOTION: '#3B82F6',
+  STRATEGY: '#059669',
+  COMMS: '#D946EF',
+};
+
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -48,124 +63,132 @@ export default function Services() {
     const el = sectionRef.current;
     if (!el) return;
 
-    const items = el.querySelectorAll('.work-item');
+    const cards = el.querySelectorAll('.service-card');
 
-    items.forEach((item) => {
-      const q = gsap.utils.selector(item as HTMLElement);
-      const check = q('.check-circle path');
-      const title = q('.work-title');
-      const desc = q('.work-desc');
-      const tag = q('.work-tag');
-
-      gsap.set(check, { strokeDashoffset: 40 });
-      gsap.set(title, { opacity: 0, x: -12 });
-      gsap.set(desc, { opacity: 0, y: 6 });
-      gsap.set(tag, { opacity: 0 });
-
+    cards.forEach((card, i) => {
       ScrollTrigger.create({
-        trigger: item,
+        trigger: card,
         start: 'top 88%',
         once: true,
         onEnter: () => {
-          const tl = gsap.timeline({
-            defaults: { ease: 'power3.out' },
+          gsap.to(card, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: 'power3.out',
+            delay: i * 0.08,
           });
-          tl.to(check, {
-            strokeDashoffset: 0,
-            duration: 0.4,
-            ease: 'power2.inOut',
-          })
-          .to(title, { opacity: 1, x: 0, duration: 0.4 }, '-=0.2')
-          .to(desc, { opacity: 1, y: 0, duration: 0.35 }, '-=0.15')
-          .to(tag, { opacity: 0.5, duration: 0.3 }, '-=0.1');
         },
       });
     });
   }, { scope: sectionRef });
 
   return (
-    <section id="services" ref={sectionRef} className="relative bg-white overflow-hidden paper-texture">
-      <div className="hidden md:block absolute inset-y-0 left-1/2 pointer-events-none z-0" style={{ width: '64rem', marginLeft: '-32rem' }}>
-        <div className="relative h-full">
-          <DottedBoundary dash="8,8" />
-        </div>
+    <section id="services" ref={sectionRef} className="relative bg-surface overflow-hidden">
+      {/* Decorative gradient */}
+      <div className="absolute top-0 left-0 w-[400px] h-[400px] pointer-events-none -z-10 opacity-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent rounded-full blur-3xl" />
       </div>
-      <div className="py-16 sm:py-20 md:py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="relative max-w-5xl mx-auto">
-            <div className="relative z-10 px-6 md:px-10 py-6">
-            <div className="mb-10 sm:mb-14 max-w-2xl">
-              <p className="font-hand text-2xl sm:text-3xl text-text-tertiary mb-0.5 line-through decoration-accent/30 decoration-2" style={{ transform: 'rotate(-0.5deg)' }}>
+
+      <div className="py-24 sm:py-28 md:py-32">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-14 sm:mb-18">
+              <p className="font-mono text-xs sm:text-sm tracking-[0.2em] uppercase text-text-muted/50 mb-3 sm:mb-4">
                 Capabilities
               </p>
-              <p className="font-hand text-2xl sm:text-3xl text-accent mt-[-0.5em] ml-8 sm:ml-10" style={{ transform: 'rotate(0.5deg)' }}>
-                what we actually make
-              </p>
-              <h2 className="section-title mt-2">
+              <h2 className="font-display font-[700] text-[clamp(2.2rem,6vw,4.5rem)] tracking-[-0.03em] text-text leading-[1.05]">
                 The work<span className="text-accent">.</span>
               </h2>
             </div>
 
-            <div className="divide-y divide-border/20">
-              {offerings.map((o) => (
-                <div
-                  key={o.title}
-                  className="work-item flex items-start gap-5 sm:gap-6 py-5 sm:py-6 md:py-7"
-                >
-                  <div className="check-circle shrink-0 mt-0.5">
-                    <svg width="28" height="28" viewBox="0 0 28 28">
-                      <circle
-                        cx="14" cy="14" r="12"
-                        fill="none"
-                        stroke="var(--color-border)"
-                        strokeWidth="1.5"
-                      />
-                      <path
-                        d="M8,14.5 L12,18.5 L20,9.5"
-                        fill="none"
-                        stroke="#D96C4A"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeDasharray="40"
-                      />
-                    </svg>
-                  </div>
+            {/* Bento grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+              {offerings.map((o, i) => {
+                const size = cardSize(i);
+                const accent = accentColors[o.tag] || '#D96C4A';
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-baseline gap-3 sm:gap-4 flex-wrap">
-                      <h3 className="work-title font-display text-xl sm:text-2xl md:text-3xl font-[700] tracking-[-0.02em] text-text">
-                        {o.title}
-                      </h3>
+                const spanClass = size === 'lg'
+                  ? 'sm:col-span-2'
+                  : size === 'sm'
+                  ? ''
+                  : '';
+
+                return (
+                  <div
+                    key={o.title}
+                    className={`service-card group relative bg-white border border-border/20 rounded-2xl p-6 sm:p-7 md:p-8 shadow-sm hover:shadow-lg transition-all duration-500 ${spanClass}`}
+                    style={{ opacity: 0, y: 20 }}
+                  >
+                    {/* Top accent bar */}
+                    <div
+                      className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl transition-all duration-500 group-hover:h-1"
+                      style={{ backgroundColor: accent }}
+                    />
+
+                    {/* Number */}
+                    <span className="font-mono text-[10px] sm:text-xs tracking-[0.15em] text-text-tertiary/50 mb-4 sm:mb-5 block">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+
+                    {/* Icon */}
+                    <div
+                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg mb-4 sm:mb-5 flex items-center justify-center transition-all duration-500 group-hover:scale-110"
+                      style={{ backgroundColor: accent + '12' }}
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2" strokeLinecap="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
                     </div>
-                    <p className="work-desc text-base sm:text-lg text-text-muted mt-1.5 leading-relaxed max-w-xl">
+
+                    <h3 className="font-display text-lg sm:text-xl md:text-2xl font-[700] text-text tracking-[-0.02em] mb-2 sm:mb-3">
+                      {o.title}
+                    </h3>
+
+                    <p className="text-sm sm:text-base text-text-muted leading-relaxed mb-4 sm:mb-5">
                       {o.desc}
                     </p>
-                  </div>
 
-                  <span className="work-tag shrink-0 text-[11px] font-mono tracking-[0.2em] text-text-tertiary mt-1.5 hidden sm:inline">
-                    {o.tag}
-                  </span>
-                </div>
-              ))}
+                    <span
+                      className="inline-block text-[9px] sm:text-[10px] font-mono tracking-[0.15em] uppercase px-2.5 py-1 rounded-full transition-colors duration-300"
+                      style={{
+                        color: accent,
+                        backgroundColor: accent + '10',
+                      }}
+                    >
+                      {o.tag}
+                    </span>
+
+                    {/* Hover accent ring */}
+                    <div
+                      className="absolute inset-0 rounded-2xl transition-all duration-500 pointer-events-none"
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.boxShadow = `inset 0 0 0 1px ${accent}30`;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.boxShadow = 'inset 0 0 0 1px transparent';
+                      }}
+                    />
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-border/20 text-center">
-              <a
+            {/* CTA */}
+            <div className="mt-14 sm:mt-18 text-center">
+              <Link
                 href="/work"
-                className="group inline-flex items-center gap-2.5 px-6 sm:px-8 py-3 sm:py-3.5 bg-accent text-white text-sm sm:text-base font-bold rounded-full hover:bg-accent/90 transition-all shadow-lg shadow-accent/20 hover:shadow-accent/30 hover:-translate-y-0.5 active:translate-y-0"
+                className="group inline-flex items-center gap-2.5 px-7 sm:px-9 py-3.5 sm:py-4 bg-accent text-white text-sm sm:text-base font-bold rounded-full hover:bg-accent/90 transition-all shadow-lg shadow-accent/20 hover:shadow-accent/30 hover:-translate-y-0.5 active:translate-y-0"
               >
                 View projects
                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 8h8M8 4l4 4-4 4" />
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </div>
-      </div>
     </section>
   );
 }
-
