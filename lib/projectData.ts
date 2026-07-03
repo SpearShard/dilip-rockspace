@@ -40,7 +40,7 @@ export const projects: Project[] = [
     title: 'TeraaWatt',
     subtitle: 'EV & clean energy ecosystem',
     category: 'Websites',
-    description: 'Brand site for the TeraaWatt product ecosystem — TeraaCharge, TeraaMart, TeraaCycle. Canvas animations, neon wireframe aesthetics, investor-ready pitch layout.',
+    description: 'Brand site for the TeraaWatt product ecosystem: TeraaCharge, TeraaMart, TeraaCycle. Canvas animations, neon wireframe aesthetics, investor-ready pitch layout.',
     image: '/work/002-teraawatt.jpg',
     month: 'March',
     year: '2025',
@@ -153,7 +153,7 @@ export const projects: Project[] = [
     title: 'RepoGami',
     subtitle: 'Codebase visualization tool',
     category: 'Projects',
-    description: 'OSS dev tool that folds any GitHub repo into an interactive visual map. Dependency graphs, file-tree origami, and contributor heatmaps — for developers who think in systems.',
+    description: 'OSS dev tool that folds any GitHub repo into an interactive visual map. Dependency graphs, file-tree origami, and contributor heatmaps for developers who think in systems.',
     image: '/repogami.png',
     month: 'March',
     year: '2025',
@@ -164,7 +164,7 @@ export const projects: Project[] = [
   {
     id: '013',
     title: 'ALA',
-    subtitle: 'Idea to sketch — 5-page flow',
+    subtitle: 'Idea to sketch, 5-page flow',
     category: 'Designs',
     description: 'A complete design flow from concept to refined sketch. Five pages capturing the evolution of an idea through wireframes, iterations, and final mockups.',
     image: '/work/designs/ala/1.png',
@@ -284,6 +284,19 @@ export const projects: Project[] = [
   },
 ];
 
+export const siteConfig = {
+  email: 'hello@rockspace.io',
+  location: 'Bengaluru, India',
+};
+
+export const workStats = [
+  { value: '20+', label: 'Launches' },
+  { value: '6+', label: 'Industries' },
+  { value: '3', label: 'Disciplines in-house' },
+];
+
+export const featuredProjectIds = ['001', '011', '002', '012'];
+
 export const teamMembers: TeamMember[] = [
   {
     name: 'Debasis',
@@ -318,4 +331,54 @@ export const teamMembers: TeamMember[] = [
     skills: ['AI Agents', 'Workflow Automation', 'Data Engineering', 'Systems Design', 'API Architecture', 'Growth Infrastructure'],
     initials: 'DP',
   },
+];
+
+export const socialLinks = [
+  { label: 'Instagram', href: 'https://www.instagram.com/rockspace.in/' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/rkspace/posts/?feedView=all' },
+];
+
+export const aboutStats = [
+  { value: '20+', label: 'Projects shipped' },
+  { value: '3', label: 'Core team' },
+  { value: '15+', label: 'Years combined' },
+  { value: '6+', label: 'Industries' },
+];
+
+export const aboutPillars = [
+  {
+    title: 'Design is strategy',
+    desc: 'Every color, grid, and motion serves the problem. If it doesn\'t convert or clarify, it doesn\'t ship.',
+    detail: 'We start with intent, not inspiration. Every visual decision ties back to a business outcome. We don\'t decorate, we communicate. The result is work that feels inevitable, not arbitrary.',
+    tag: 'Identity' as const,
+  },
+  {
+    title: 'Code that scales',
+    desc: 'Components before pages. Performance is a feature. We architect systems, not one-off screens.',
+    detail: 'We build with the next project in mind. Every component is reusable, every pattern documented, every performance budget respected. Our codebases age well because we plan for growth from line one.',
+    tag: 'Engineering' as const,
+  },
+  {
+    title: 'Automation as instinct',
+    desc: 'AI agents, pipelines, smart workflows. We build the machines that multiply your team\'s output.',
+    detail: 'While others hire more hands, we build better systems. From automated deployment pipelines to AI-powered content workflows, we engineer leverage into everything we touch. Less busy work, more impact.',
+    tag: 'Systems' as const,
+  },
+  {
+    title: 'Motion that matters',
+    desc: 'Animation guides attention and builds trust. We use motion with purpose, never as decoration.',
+    detail: 'Every transition, hover state, and micro-interaction serves a purpose. Motion guides the eye, provides feedback, and makes interfaces feel alive. We obsess over the 200ms between states because that\'s where delight lives.',
+    tag: 'Motion' as const,
+  },
+];
+
+export const teamPhotos = ['/debasispfp.png', '/jayadityapfp.png', '/dilippfp.png'];
+
+export const footerServices = [
+  'Brand & Identity',
+  'Web & Product',
+  'AI & Systems',
+  'Motion & 3D',
+  'Strategy',
+  'Pitch & Narrative',
 ];

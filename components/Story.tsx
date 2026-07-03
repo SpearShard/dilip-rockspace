@@ -4,173 +4,67 @@ import { useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import SectionLabel from '@/components/micro/SectionLabel';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const originals = [
-  {
-    id: 'dm',
-    name: 'Debasis',
-    quote: 'Got tired of handing off Figma files. So I learned to build them myself.',
-    role: 'Design \u2192 Code',
-    accent: '#D96C4A',
-  },
-  {
-    id: 'gj',
-    name: 'Jayaditya',
-    quote: 'Components before code. Systems before screens. I draw the grid before anyone sees the page.',
-    role: 'Architecture \u2192 Interface',
-    accent: '#E8B84B',
-  },
-  {
-    id: 'dp',
-    name: 'Dilip',
-    quote: 'Built a bot to do my job. Then another. Turns out the real job was building the bots.',
-    role: 'Automation \u2192 Abstraction',
-    accent: '#7C3AED',
-  },
+const beats = [
+  { name: 'Debasis', path: 'Design → Code', quote: 'Got tired of handing off Figma files. So I learned to build them myself.' },
+  { name: 'Jayaditya', path: 'Architecture → Interface', quote: 'Components before code. Systems before screens.' },
+  { name: 'Dilip', path: 'Automation → Abstraction', quote: 'Built a bot to do my job. Then built the replacement.' },
 ];
 
 export default function Story() {
   const sectionRef = useRef<HTMLElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     const el = sectionRef.current;
     if (!el) return;
-
-    const items = el.querySelectorAll('.origin-item');
-
-    gsap.set(items, { opacity: 0, y: 30 });
-
-    items.forEach((item, i) => {
-      ScrollTrigger.create({
-        trigger: item,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => {
-          gsap.to(item, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power3.out',
-            delay: i * 0.15,
-          });
-        },
+    el.querySelectorAll('.story-beat').forEach((item, i) => {
+      gsap.fromTo(item, { opacity: 0, y: 28 }, {
+        opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: i * 0.08,
+        scrollTrigger: { trigger: item, start: 'top 88%', once: true },
       });
     });
-
-    const pullQuote = el.querySelector('.pull-quote');
-    if (pullQuote) {
-      gsap.set(pullQuote, { opacity: 0, y: 20 });
-      ScrollTrigger.create({
-        trigger: pullQuote,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => {
-          gsap.to(pullQuote, {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            ease: 'power3.out',
-          });
-        },
-      });
-    }
-
-    // Animate the timeline line
-    const line = lineRef.current;
-    if (line) {
-      gsap.set(line, { scaleY: 0, transformOrigin: 'top center' });
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 70%',
-        end: 'bottom 60%',
-        once: true,
-        onEnter: () => {
-          gsap.to(line, {
-            scaleY: 1,
-            duration: 1.2,
-            ease: 'power3.inOut',
-          });
-        },
-      });
-    }
+    gsap.fromTo(el.querySelector('.story-quote'), { opacity: 0, y: 20 }, {
+      opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+      scrollTrigger: { trigger: '.story-quote', start: 'top 88%', once: true },
+    });
   }, { scope: sectionRef });
 
   return (
-    <section id="story" ref={sectionRef} className="relative bg-bg overflow-hidden">
-      {/* Decorative gradient */}
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] pointer-events-none -z-10 opacity-20">
-        <div className="absolute inset-0 bg-gradient-to-tr from-accent-warm/5 via-transparent to-transparent rounded-full blur-3xl" />
-      </div>
-
-      <div className="py-24 sm:py-28 md:py-32">
+    <section id="story" ref={sectionRef} className="bg-bg border-t border-border/50">
+      <div className="py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-6 sm:px-10">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-14 sm:mb-18">
-              <p className="font-mono text-xs sm:text-sm tracking-[0.2em] uppercase text-text-muted/50 mb-3 sm:mb-4">
-                The origin
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+            <div className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
+              <SectionLabel className="mb-4">The origin</SectionLabel>
+              <h2 className="section-heading">How RockSpace happened.</h2>
+              <p className="mt-4 text-text-muted text-body-lg leading-[1.6] font-medium-ui">
+                Three specialists who stopped waiting for permission and started owning outcomes.
               </p>
-              <h2 className="font-display font-[700] text-[clamp(2.2rem,6vw,4.5rem)] tracking-[-0.03em] text-text leading-[1.05]">
-                Three paths collided<span className="text-accent">.</span>
-              </h2>
             </div>
 
-            {/* Timeline */}
-            <div className="relative">
-              {/* Vertical line */}
-              <div
-                ref={lineRef}
-                className="absolute left-[18px] sm:left-[22px] top-0 bottom-0 w-px bg-border/40"
-              />
-
-              <div className="space-y-10 sm:space-y-12">
-                {originals.map((o) => (
-                  <div key={o.id} className="origin-item relative pl-12 sm:pl-14">
-                    {/* Dot on timeline */}
-                    <div
-                      className="absolute left-[10px] sm:left-[14px] top-1 w-[18px] h-[18px] rounded-full border-2 border-bg shadow-sm"
-                      style={{ backgroundColor: o.accent, borderColor: o.accent }}
-                    />
-
-                    {/* Content */}
-                    <div>
-                      <div className="flex items-baseline gap-2 mb-1">
-                        <h3 className="font-display text-xl sm:text-2xl font-[700] text-text tracking-[-0.02em]">
-                          {o.name}
-                        </h3>
-                        <span className="text-[10px] sm:text-xs font-mono text-text-tertiary tracking-[0.1em] uppercase">
-                          {o.role}
-                        </span>
-                      </div>
-
-                      <blockquote className="text-base sm:text-lg text-text-muted leading-relaxed italic border-l-2 pl-4 sm:pl-5 mt-2 sm:mt-3" style={{ borderColor: o.accent + '40' }}>
-                        &ldquo;{o.quote}&rdquo;
-                      </blockquote>
-                    </div>
+            <div className="lg:col-span-8 space-y-0 divide-y divide-border/60">
+              {beats.map((b, i) => (
+                <article key={b.name} className="story-beat grid sm:grid-cols-[80px_1fr] gap-4 sm:gap-8 py-10 first:pt-0 group">
+                  <span className="font-mono text-sm text-text-tertiary transition-colors duration-300 group-hover:text-accent">0{i + 1}</span>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-accent mb-2">{b.path}</p>
+                    <h3 className="text-heading-sm text-text mb-3">{b.name}</h3>
+                    <p className="text-text-muted text-lg leading-relaxed italic">&ldquo;{b.quote}&rdquo;</p>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Pull quote */}
-            <div className="pull-quote relative mt-20 sm:mt-24 md:mt-28 text-center">
-              <div className="max-w-2xl mx-auto px-4">
-                <span className="block font-display text-[4rem] sm:text-[6rem] text-accent/5 leading-none select-none tracking-[-0.06em]">
-                  &amp;
-                </span>
-                <p className="font-display text-xl sm:text-2xl md:text-3xl text-text-muted mt-[-0.6em] leading-snug font-[600] tracking-[-0.02em]">
-                  RockSpace isn&rsquo;t a studio. It&rsquo;s what happens when three people stop asking for permission.
-                </p>
-                <div className="flex justify-center gap-1.5 mt-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-text-tertiary/30" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-text-tertiary/30" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-text-tertiary/30" />
-                </div>
-              </div>
+                </article>
+              ))}
             </div>
           </div>
+
+          <blockquote className="story-quote mt-20 pt-16 border-t border-border/50 max-w-3xl relative">
+            <span className="absolute -top-3 left-0 font-display text-6xl text-accent/20 leading-none select-none" aria-hidden>&ldquo;</span>
+            <p className="pull-quote pl-6">
+              RockSpace isn&rsquo;t a studio. It&rsquo;s what happens when three people decide to be the best in the room.
+            </p>
+          </blockquote>
         </div>
       </div>
     </section>

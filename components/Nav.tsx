@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { IconClose } from '@/lib/icons';
 
 const links = [
   { label: 'About', href: '/about' },
@@ -82,12 +83,8 @@ export default function Nav() {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
     tl.to(sparkle, {
-        scale: 1,
-        opacity: 1,
-        duration: 0.55,
-        ease: 'back.out(1.4)',
-        transformOrigin: '82% 20%',
-      }, 0)
+      scale: 1, opacity: 1, duration: 0.55, ease: 'back.out(1.4)', transformOrigin: '82% 20%',
+    }, 0)
       .to(stars, {
         x: (i) => starData[i].x * 0.35,
         y: (i) => starData[i].y * 0.35,
@@ -101,11 +98,7 @@ export default function Nav() {
       .to(label, { opacity: 1, duration: 0.3 }, 0.2)
       .to(backBtn, { opacity: 1, scale: 1, duration: 0.3 }, 0.25)
       .to(menuItems, {
-        opacity: 1,
-        x: 0,
-        duration: 0.4,
-        stagger: 0.07,
-        ease: 'power2.out',
+        opacity: 1, x: 0, duration: 0.4, stagger: 0.07, ease: 'power2.out',
       }, 0.3);
   };
 
@@ -131,16 +124,11 @@ export default function Nav() {
       .to([backBtn, label], { opacity: 0, duration: 0.1 }, 0)
       .to(stars, {
         x: 0, y: 0, scale: 0, opacity: 0, rotation: 0,
-        duration: 0.35,
-        ease: 'power3.in',
+        duration: 0.35, ease: 'power3.in',
         stagger: { each: 0.008, from: 'random' },
       }, 0.05)
       .to(sparkle, {
-        scale: 0,
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power2.in',
-        transformOrigin: '82% 20%',
+        scale: 0, opacity: 0, duration: 0.3, ease: 'power2.in', transformOrigin: '82% 20%',
       }, 0.1);
   };
 
@@ -198,7 +186,7 @@ export default function Nav() {
   return (
     <>
       <header ref={headerRef} className="fixed top-3 sm:top-4 left-1/2 -translate-x-1/2 z-50">
-        <div className="relative flex items-center justify-between gap-2 sm:gap-4 px-2 sm:px-4 py-1.5 sm:py-2 bg-white/75 backdrop-blur-xl border border-accent/20 rounded-full shadow-lg shadow-accent/5 overflow-hidden">
+        <div className="relative flex items-center justify-center gap-2 sm:gap-4 px-2 sm:px-4 py-1.5 sm:py-2 bg-white/90 backdrop-blur-xl border border-border/60 rounded-full shadow-[0_4px_24px_rgba(8,8,8,0.06)] overflow-hidden">
           <div
             ref={blobRef}
             className="absolute pointer-events-none w-[120px] h-[120px] rounded-full bg-accent/8 blur-xl"
@@ -209,10 +197,10 @@ export default function Nav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 sm:px-4 py-1.5 text-[13px] sm:text-[14px] font-[700] tracking-wide rounded-full transition-all duration-200 ${
+                className={`px-3 sm:px-4 py-1.5 text-[13px] sm:text-[14px] font-semibold-ui tracking-[-0.02em] rounded-full transition-all duration-200 ${
                   isActive(link.href)
-                    ? 'text-text bg-black/[0.04]'
-                    : 'text-text-muted/70 hover:text-text hover:bg-black/[0.03]'
+                    ? 'text-text bg-black/[0.04] nav-link-active'
+                    : 'text-text-muted/70 hover:text-text hover:bg-black/[0.03] hover:scale-[1.02]'
                 }`}
               >
                 {link.label}
@@ -222,11 +210,10 @@ export default function Nav() {
         </div>
       </header>
 
-      {/* Float button — appears on scroll */}
       <button
         ref={floatRef}
         onClick={openMenu}
-        className="fixed top-4 sm:top-5 right-4 sm:right-5 z-50 w-10 h-10 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-xl border border-border/40 shadow-lg shadow-black/[0.04] transition-colors duration-300 hover:bg-white"
+        className="fixed top-4 sm:top-5 right-4 sm:right-5 z-50 w-10 h-10 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-xl border border-border/40 shadow-lg shadow-black/[0.04] transition-all duration-300 hover:bg-white hover:scale-105 hover:shadow-xl"
         style={{ scale: 0, opacity: 0 }}
         aria-label="Open menu"
       >
@@ -235,13 +222,6 @@ export default function Nav() {
         </div>
       </button>
 
-      {/*
-        ── SPARKLE MENU ──
-        Anchored fixed to the top-right corner so the sparkle's right-tip
-        (the long tail, at ~99% x, ~20% y of the SVG) sits behind the float button.
-        The SVG is 600×480 — large enough to hold the links comfortably.
-        transform-origin is set to the point matching the float button.
-      */}
       <div
         ref={menuRef}
         className="hidden pointer-events-none fixed z-[60]"
@@ -250,12 +230,7 @@ export default function Nav() {
         aria-modal="true"
         aria-label="Navigation menu"
       >
-        {/* ── Scattered micro-stars (relative to sparkle center) ── */}
-        <div
-          className="pointer-events-none absolute"
-          style={{ left: '28%', top: '45%' }}
-          aria-hidden="true"
-        >
+        <div className="pointer-events-none absolute" style={{ left: '28%', top: '45%' }} aria-hidden="true">
           {starData.map((s, i) => (
             <div
               key={i}
@@ -274,13 +249,6 @@ export default function Nav() {
           ))}
         </div>
 
-        {/*
-          ── SVG Sparkle shape ──
-          ViewBox matches the analyzed geometry: 100×80 (aspect ~1.25:1)
-          Path: M top Q waist right Q waist bottom Q waist left Q waist top Z
-          The shape fills with a warm off-white, matching the site's bg palette.
-          A very subtle inner shadow is faked with a second slightly-smaller fill.
-        */}
         <svg
           ref={sparkleRef}
           viewBox="0 0 100 80"
@@ -289,27 +257,16 @@ export default function Nav() {
           style={{ filter: 'drop-shadow(0 20px 60px rgba(28,24,22,0.18)) drop-shadow(0 4px 16px rgba(28,24,22,0.10))' }}
           aria-hidden="true"
         >
-          <defs>
-            <clipPath id="sparkle-clip">
-              {/* Main sparkle: top(27.96,0) → right(99.5,15.5) → bottom(29.72,79.75) → left(0,43) → back */}
-              <path d="M 27.96 0 Q 37 24.6 99.5 15.5 Q 36.5 40.75 29.72 79.75 Q 22 47.55 0 43 Q 16 26.4 27.96 0 Z" />
-            </clipPath>
-          </defs>
-
-          {/* Main fill */}
           <path
             d="M 27.96 0 Q 37 24.6 99.5 15.5 Q 36.5 40.75 29.72 79.75 Q 22 47.55 0 43 Q 16 26.4 27.96 0 Z"
             fill="#F8F7F4"
             stroke="#E8E4DF"
             strokeWidth="0.3"
           />
-
-          {/* Inner tonal layer — gives depth, slightly warmer center */}
           <path
             d="M 27.96 0 Q 37 24.6 99.5 15.5 Q 36.5 40.75 29.72 79.75 Q 22 47.55 0 43 Q 16 26.4 27.96 0 Z"
             fill="url(#sparkle-gradient)"
           />
-
           <defs>
             <radialGradient id="sparkle-gradient" cx="30%" cy="45%" r="55%">
               <stop offset="0%" stopColor="#F5F0EC" stopOpacity="0" />
@@ -318,15 +275,10 @@ export default function Nav() {
           </defs>
         </svg>
 
-        {/* ── Menu content — positioned in the body of the sparkle ── */}
         <div className="absolute" style={{ left: '4%', top: '18%', width: '50%' }}>
-
-          {/* Studio wordmark */}
           <p className="menu-label font-mono text-[9px] tracking-[0.25em] uppercase text-text/25 mb-6 ml-0.5">
             ROCKSPACE
           </p>
-
-          {/* Nav links */}
           <nav className="flex flex-col gap-1">
             {links.map((link) => (
               <Link
@@ -337,7 +289,6 @@ export default function Nav() {
                   isActive(link.href) ? 'text-text' : 'text-text/35 hover:text-text'
                 }`}
               >
-                {/* Active dot */}
                 <span
                   className={`w-1 h-1 rounded-full flex-shrink-0 transition-all duration-200 ${
                     isActive(link.href)
@@ -345,7 +296,7 @@ export default function Nav() {
                       : 'bg-text/20 scale-75 group-hover:bg-accent group-hover:scale-100'
                   }`}
                 />
-                <span className="font-display font-[700] text-[clamp(1.6rem,4vw,2.4rem)] tracking-[-0.03em] leading-none">
+                <span className="font-bold-ui text-[clamp(1.75rem,4vw,2.5rem)] tracking-[-0.035em] leading-none">
                   {link.label}
                 </span>
               </Link>
@@ -353,28 +304,18 @@ export default function Nav() {
           </nav>
         </div>
 
-        {/* Close button — top-left of the sparkle body */}
         <button
           onClick={closeMenu}
           className="menu-back absolute flex items-center gap-1.5 text-[11px] font-mono tracking-[0.1em] uppercase text-text/30 hover:text-text/60 transition-colors duration-200 group"
           style={{ left: '4%', bottom: '22%' }}
         >
-          <svg
-            className="w-3 h-3 transition-transform duration-200 group-hover:-translate-x-0.5"
-            viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
-          >
-            <path d="M8 2L4 6l4 4" />
-          </svg>
+          <IconClose className="size-3 transition-transform duration-200 group-hover:rotate-90" />
           Close
         </button>
       </div>
 
-      {/* Thin backdrop — just dims the page slightly, not a full cover */}
       {menuOpen && (
-        <div
-          className="fixed inset-0 z-[59] bg-text/[0.04] backdrop-blur-[2px]"
-          onClick={closeMenu}
-        />
+        <div className="fixed inset-0 z-[59] bg-text/[0.04] backdrop-blur-[2px]" onClick={closeMenu} />
       )}
     </>
   );

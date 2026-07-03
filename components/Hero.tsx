@@ -5,6 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { IconArrow, IconPlay } from '@/lib/icons';
+import { workStats } from '@/lib/projectData';
+import Magnetic from '@/components/micro/Magnetic';
+import HeroHeadline from '@/components/micro/HeroHeadline';
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -15,30 +19,10 @@ export default function Hero() {
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    tl.fromTo('.hero-label',
-      { opacity: 0, y: 12 },
-      { opacity: 1, y: 0, duration: 0.5 }
-    )
-    .fromTo('.hero-heading',
-      { opacity: 0, y: 40, scale: 0.97 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.8 },
-      '-=0.2'
-    )
-    .fromTo('.hero-desc',
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6 },
-      '-=0.3'
-    )
-    .fromTo('.hero-cta',
-      { opacity: 0, y: 16 },
-      { opacity: 1, y: 0, duration: 0.5 },
-      '-=0.2'
-    )
-    .fromTo('.hero-visual',
-      { opacity: 0, x: 40, scale: 0.95 },
-      { opacity: 1, x: 0, scale: 1, duration: 1 },
-      '-=0.4'
-    );
+    tl.fromTo('.hero-desc', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 })
+      .fromTo('.hero-cta', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, 0.4)
+      .fromTo('.hero-stat', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, stagger: 0.08 }, 0.5)
+      .fromTo('.hero-visual', { opacity: 0, x: 48, scale: 0.94 }, { opacity: 1, x: 0, scale: 1, duration: 1.1 }, 0.2);
   }, { scope: sectionRef });
 
   return (
@@ -47,95 +31,79 @@ export default function Hero() {
       ref={sectionRef}
       className="relative min-h-dvh flex items-center bg-bg overflow-hidden"
     >
-      {/* Animated gradient atmosphere */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-15%] right-[-8%] w-[55%] h-[55%] bg-gradient-to-br from-accent/6 via-transparent to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
-        <div className="absolute bottom-[-15%] left-[-8%] w-[45%] h-[45%] bg-gradient-to-tr from-accent-warm/5 via-transparent to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s' }} />
-        <div className="absolute top-[40%] left-[30%] w-[30%] h-[30%] bg-gradient-to-r from-accent/3 to-accent-warm/3 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '12s' }} />
+        <div className="absolute top-[-15%] right-[-8%] w-[55%] h-[55%] bg-gradient-to-br from-accent/5 via-transparent to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-[-15%] left-[-8%] w-[45%] h-[45%] bg-gradient-to-tr from-accent-warm/4 via-transparent to-transparent rounded-full blur-3xl" />
       </div>
 
-      {/* Vector top-left */}
       <Link
         href="/"
-        className="hero-vector absolute top-6 sm:top-8 left-6 sm:left-10 z-10 w-10 h-8 sm:w-12 sm:h-[38px] cursor-pointer"
+        className="absolute top-6 sm:top-8 left-6 sm:left-10 z-10 w-10 h-8 sm:w-12 sm:h-[38px] group"
         aria-label="Go home"
       >
         <Image
           src="/Vector 2173.png"
           alt=""
           fill
-          className="object-contain object-left-top brightness-0 opacity-30 hover:opacity-50 transition-opacity duration-200"
+          className="object-contain object-left-top brightness-0 opacity-30 group-hover:opacity-55 transition-all duration-300 group-hover:scale-105"
           sizes="48px"
           priority
         />
       </Link>
 
       <div className="relative z-10 w-full">
-        {/* Text content */}
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 py-20 md:py-0">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 py-24 md:py-0">
           <div className="max-w-3xl">
-            <p className="hero-label font-mono text-xs sm:text-sm tracking-[0.2em] uppercase text-text-muted/50 mb-6 sm:mb-8">
-              RockSpace Studio
-            </p>
-
-            <h1 className="hero-heading font-display font-[700] text-[clamp(2.8rem,9vw,7rem)] tracking-[-0.04em] text-text leading-[0.92]">
-              Three paths.
+            <h1 className="display-heading">
+              <HeroHeadline>Three paths.</HeroHeadline>
               <br />
-              <span className="text-accent">One collision.</span>
+              <span className="text-accent">
+                <HeroHeadline>One collision.</HeroHeadline>
+              </span>
             </h1>
 
-            <p className="hero-desc text-base sm:text-lg md:text-xl text-text-muted max-w-lg mt-5 sm:mt-6 md:mt-8 leading-relaxed">
-              Design, code, and systems — converging into work that feels inevitable.
+            <p className="hero-desc text-body-lg text-text-muted max-w-lg mt-6 md:mt-8 font-medium-ui leading-[1.55]" style={{ opacity: 0 }}>
+              Design, code, and systems. One team that ships what others only pitch.
             </p>
 
-            <div className="hero-cta mt-8 sm:mt-10 md:mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Link
-                href="/work"
-                className="group inline-flex items-center justify-center gap-2.5 px-7 sm:px-9 py-3.5 sm:py-4 bg-accent text-white text-sm sm:text-base font-bold rounded-full hover:bg-accent/90 transition-all shadow-xl shadow-accent/20 hover:shadow-accent/35 hover:-translate-y-0.5 active:translate-y-0"
-              >
-                View our work
-                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 8h8M8 4l4 4-4 4" />
-                </svg>
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center px-7 sm:px-9 py-3.5 sm:py-4 border-2 border-border/60 text-text text-sm sm:text-base font-bold rounded-full hover:border-accent/40 hover:bg-accent-light/20 transition-all active:translate-y-0"
-              >
-                Get in touch
-              </Link>
+            <div className="hero-cta mt-8 sm:mt-10 md:mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4" style={{ opacity: 0 }}>
+              <Magnetic strength={0.2}>
+                <Link href="/work" className="btn-primary">
+                  See the proof
+                  <IconArrow />
+                </Link>
+              </Magnetic>
+              <Magnetic strength={0.15}>
+                <Link href="/contact" className="btn-outline">Start a project</Link>
+              </Magnetic>
+            </div>
+
+            <div className="mt-12 sm:mt-14 flex gap-8 sm:gap-12 border-t border-border/60 pt-8">
+              {workStats.map((s) => (
+                <div key={s.label} className="hero-stat" style={{ opacity: 0 }}>
+                  <p className="stat-value text-text">{s.value}</p>
+                  <p className="font-mono text-[11px] font-medium tracking-[0.08em] text-text-tertiary mt-2 uppercase">{s.label}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Video — positioned offset right */}
-        <div className="hero-visual absolute right-0 top-1/2 -translate-y-1/2 w-[30%] xl:w-[35%] hidden lg:block pointer-events-none">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-l from-bg via-bg/50 to-transparent z-10 w-1/3 left-0" />
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="w-full h-auto"
-            >
+        <div className="hero-visual absolute right-6 xl:right-10 top-1/2 -translate-y-1/2 w-[30%] xl:w-[34%] hidden lg:block" style={{ opacity: 0 }}>
+          <div className="video-frame relative rounded-2xl overflow-hidden border border-border/50 shadow-2xl shadow-black/[0.12] bg-black">
+            <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 text-[11px] font-mono tracking-[-0.015em] text-white/70 uppercase">
+              <IconPlay className="text-accent" />
+              Live
+            </div>
+            <video autoPlay loop muted playsInline preload="auto" className="w-full h-auto block">
               <source src="/logomotion.mp4" type="video/mp4" />
             </video>
           </div>
         </div>
 
-        {/* Decorative dash on mobile */}
-        <div className="lg:hidden mt-10 sm:mt-14 max-w-7xl mx-auto px-6 sm:px-10">
-          <div className="w-full aspect-[3/1] rounded-2xl overflow-hidden border border-border/10 shadow-xl shadow-black/[0.02]">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="w-full h-full object-cover"
-            >
+        <div className="lg:hidden mt-12 max-w-7xl mx-auto px-6 sm:px-10">
+          <div className="video-frame rounded-2xl overflow-hidden border border-border/40 shadow-xl aspect-[2/1] bg-black">
+            <video autoPlay loop muted playsInline preload="auto" className="w-full h-full object-cover">
               <source src="/logomotion.mp4" type="video/mp4" />
             </video>
           </div>
