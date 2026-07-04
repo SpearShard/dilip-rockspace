@@ -9,7 +9,7 @@ function DesignScene() {
 
   const shapes = useMemo(() => {
     const items: { pos: [number, number, number]; color: string; size: number; speed: number; offset: number }[] = [];
-    const colors = ['#A78BFA', '#7C3AED', '#DDD6FE', '#FF8A65'];
+    const colors = ['#D96C4A', '#E8B84B', '#C45A3A', '#E8B84B'];
     for (let i = 0; i < 6; i++) {
       const theta = (i / 6) * Math.PI * 2;
       const f = i * 0.137;
@@ -60,7 +60,7 @@ function CodeScene() {
       pos[i * 3] = x;
       pos[i * 3 + 1] = y;
       pos[i * 3 + 2] = z;
-      const c = new THREE.Color('#7C3AED');
+      const c = new THREE.Color('#D96C4A');
       const brightness = 0.3 + t1 * 0.4;
       col[i * 3] = c.r * brightness;
       col[i * 3 + 1] = c.g * brightness;
@@ -111,7 +111,7 @@ function AutomationScene() {
       {nodes.map((pos, i) => (
         <mesh key={i} position={pos as [number, number, number]}>
           <sphereGeometry args={[0.05, 8, 8]} />
-          <meshBasicMaterial color="#A78BFA" transparent opacity={0.3} />
+          <meshBasicMaterial color="#D96C4A" transparent opacity={0.25} />
         </mesh>
       ))}
       {nodes.flatMap((a, i) =>
@@ -123,7 +123,7 @@ function AutomationScene() {
                 attach="attributes-position"
               />
             </bufferGeometry>
-            <lineBasicMaterial color="#A78BFA" transparent opacity={0.04} />
+            <lineBasicMaterial color="#D96C4A" transparent opacity={0.04} />
           </line>
         ))
       )}
