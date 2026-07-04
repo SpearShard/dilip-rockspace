@@ -1,54 +1,45 @@
 'use client';
 
-import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
-import { SceneGate } from '@/lib/useInView';
+import Link from 'next/link';
 
-const ContactScene = dynamic(() => import('@/components/scene/ContactScene'), { ssr: false });
+const points = ['Fast replies', 'Clear strategy', 'Launch-ready execution'];
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative bg-bg overflow-hidden">
-      <SceneGate margin="150%">
-        <div className="absolute inset-0 pointer-events-none opacity-[0.12]">
-          <Suspense fallback={null}>
-            <ContactScene />
-          </Suspense>
-        </div>
-      </SceneGate>
+    <section id="contact" className="relative py-24 sm:py-28 lg:py-32">
+      <div className="section-shell">
+        <div className="rounded-[2.2rem] border border-black/5 bg-stone-900 p-8 text-white shadow-[0_24px_120px_rgba(23,18,15,0.18)] sm:p-10 lg:p-12">
+          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-white/60">Let’s build</p>
+              <h2 className="mt-4 font-display text-3xl leading-tight tracking-[-0.03em] text-white sm:text-4xl">
+                If the work matters, the experience should feel just as refined.
+              </h2>
+              <p className="mt-5 max-w-xl text-lg leading-8 text-white/70">
+                Share the ambition and we’ll shape a thoughtful path forward — from positioning and story to the product surface people actually remember.
+              </p>
+            </div>
 
-      {/* Decorative gradients */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] pointer-events-none -z-10 opacity-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-transparent rounded-full blur-3xl" />
-      </div>
-
-      <div className="py-24 sm:py-28 md:py-32">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="font-mono text-xs sm:text-sm tracking-[0.2em] uppercase text-text-muted/50 mb-3 sm:mb-4">
-              Get in touch
-            </p>
-            <h2 className="font-display font-[700] text-[clamp(2.2rem,6vw,4.5rem)] tracking-[-0.03em] text-text leading-[1.05] mb-8 sm:mb-10">
-              Let&rsquo;s build something<span className="text-accent">.</span>
-            </h2>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5">
-              <a
-                href="mailto:hello@rockspace.io"
-                className="group inline-flex items-center gap-2.5 px-8 sm:px-10 py-4 sm:py-4.5 bg-accent text-white text-base sm:text-lg font-bold rounded-full hover:bg-accent/90 transition-all shadow-xl shadow-accent/20 hover:shadow-accent/35 hover:-translate-y-0.5 active:translate-y-0"
-              >
-                hello@rockspace.io
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 8h8M8 4l4 4-4 4" />
-                </svg>
-              </a>
-              <span className="text-text-tertiary text-sm hidden sm:inline">or</span>
-              <a
-                href="#"
-                className="inline-flex items-center px-8 sm:px-10 py-4 sm:py-4.5 border-2 border-border/60 text-text text-base sm:text-lg font-semibold rounded-full hover:border-accent/30 hover:bg-accent-light/10 transition-all"
-              >
-                Book a call
-              </a>
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/10 p-6 backdrop-blur">
+              <div className="flex flex-wrap gap-2">
+                {points.map((point) => (
+                  <span key={point} className="rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-sm text-white/75">{point}</span>
+                ))}
+              </div>
+              <div className="mt-6 space-y-3">
+                <a href="mailto:hello@rockspace.io" className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-white/15 hover:shadow-lg">
+                  <span>hello@rockspace.io</span>
+                  <svg className="w-4 h-4 text-white/50 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7 7h10v10M7 17L17 7" />
+                  </svg>
+                </a>
+                <Link href="/contact" className="group flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-stone-900 transition-all hover:-translate-y-0.5 hover:bg-stone-50 hover:shadow-lg">
+                  <span>Book a strategy call</span>
+                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

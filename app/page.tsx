@@ -1,7 +1,7 @@
 import Nav from '@/components/Nav';
 import Hero from '@/components/Hero';
-import Team from '@/components/Team';
 import Story from '@/components/Story';
+import Team from '@/components/Team';
 import Services from '@/components/Services';
 import Process from '@/components/Process';
 import Contact from '@/components/Contact';
@@ -11,12 +11,14 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <Hero />
-      <Team />
-      <Story />
-      <Services />
-      <Process />
-      <Contact />
+      <main>
+        <Hero />
+        <Story />
+        <Team />
+        <Services />
+        <Process />
+        <Contact />
+      </main>
       <Footer />
     </>
   );

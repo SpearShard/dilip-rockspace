@@ -1,97 +1,44 @@
 'use client';
 
-import Image from 'next/image';
-import { Mail } from 'lucide-react';
+import Link from 'next/link';
+import { Camera, Link2, Mail } from 'lucide-react';
 
 const socials = [
-  {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/rockspace.in/',
-    icon: ({ className }: { className?: string }) => (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-        <line x1="17.5" y1="6.5" x2="17.5" y2="6.5" />
-      </svg>
-    ),
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/rkspace/posts/?feedView=all',
-    icon: ({ className }: { className?: string }) => (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-        <rect x="2" y="9" width="4" height="12" />
-        <circle cx="4" cy="4" r="2" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Mail',
-    href: 'mailto:dilipseervi2308@gmail.com',
-    icon: ({ className }: { className?: string }) => <Mail className={className} />,
-  },
+  { label: 'Instagram', href: 'https://www.instagram.com/rockspace.in/', icon: Camera },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/rkspace/posts/?feedView=all', icon: Link2 },
+  { label: 'Email', href: 'mailto:hello@rockspace.io', icon: Mail },
 ];
 
 export default function Footer() {
   return (
-    <footer className="w-full mt-16 md:mt-20 lg:mt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-6 sm:pb-8">
-        <div className="relative max-w-5xl mx-auto">
-          <div className="rounded-3xl bg-accent px-8 sm:px-12 md:px-16 py-12 sm:py-14 md:py-16 overflow-hidden">
-            {/* Subtle paper texture overlay */}
-            <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-              style={{
-                backgroundImage:
-                  'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px)',
-              }}
-            />
-
-            <div className="relative z-10 flex flex-col items-center text-center gap-5 sm:gap-6">
-              {/* Logo + brand */}
-              <div className="flex items-center gap-2.5">
-                <div className="relative w-7 h-7 sm:w-8 sm:h-8 brightness-0 invert">
-                  <Image
-                    src="/Vector 2173.png"
-                    alt=""
-                    fill
-                    className="object-contain"
-                    sizes="32px"
-                  />
-                </div>
-                <span className="text-xl sm:text-2xl font-[700] tracking-tight text-white">RockSpace</span>
-              </div>
-
-              <p className="text-sm sm:text-base text-white/70 leading-relaxed max-w-xs font-[500]">
-                Three people. Three disciplines. One outcome.
+    <footer className="pb-8 pt-2 sm:pb-10">
+      <div className="section-shell">
+        <div className="rounded-[2rem] border border-black/5 bg-white/70 p-6 shadow-[0_16px_60px_rgba(23,18,15,0.05)] sm:p-8">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-stone-500">RockSpace</p>
+              <p className="mt-2 max-w-xl text-base leading-7 text-stone-600">
+                Quietly ambitious work for founders who want their brand and product to feel unmistakably premium.
               </p>
-
-              {/* Social links */}
-              <div className="flex items-center gap-3 sm:gap-4 mt-1">
-                {socials.map((s) => {
-                  const Icon = s.icon;
-                  return (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl border border-white/20 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/40 transition-all duration-200"
-                      aria-label={s.label}
-                    >
-                      <Icon className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
-                    </a>
-                  );
-                })}
-              </div>
-
-              {/* Divider */}
-              <div className="w-12 h-px bg-white/15 mt-1" />
-
-              {/* Copyright */}
-              <p className="text-xs sm:text-sm text-white/40 font-[500]">
-                © 2025 RockSpace. All rights reserved.
-              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              {socials.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-4 py-2 text-sm font-medium text-stone-700 transition-all hover:-translate-y-0.5 hover:bg-white hover:shadow-md hover:border-stone-300">
+                    <Icon className="h-4 w-4 text-stone-500 transition group-hover:text-stone-700" />
+                    {item.label}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+          <div className="mt-6 flex flex-col gap-3 border-t border-black/5 pt-6 text-sm text-stone-500 sm:flex-row sm:items-center sm:justify-between">
+            <p>© 2026 RockSpace. Crafted with intention.</p>
+            <div className="flex gap-4">
+              <Link href="/about" className="transition hover:text-stone-900">About</Link>
+              <Link href="/work" className="transition hover:text-stone-900">Work</Link>
+              <Link href="/contact" className="transition hover:text-stone-900">Contact</Link>
             </div>
           </div>
         </div>

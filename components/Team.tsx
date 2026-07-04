@@ -29,17 +29,11 @@ export default function Team() {
     const cards = el.querySelectorAll('.team-card');
 
     cards.forEach((card, i) => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 88%',
-          once: true,
-        },
-      });
+      const tl = gsap.timeline({ delay: 0.15 + i * 0.1 });
 
       tl.fromTo(card,
         { opacity: 0, y: 40, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power3.out', delay: i * 0.12 }
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power3.out' }
       )
       .fromTo(card.querySelectorAll('.card-line'),
         { opacity: 0, y: 8 },
