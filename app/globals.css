@@ -95,3 +95,26 @@ body { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* Ensure images in work grid don't overflow */
 img { max-width: 100%; height: auto; }
+
+/* Responsive Mobile Menu Fixes */
+@media (max-width: 768px) {
+  .section-shell {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Ensure the nav header doesn't overlap content */
+header {
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+/* Mobile Nav Link hover effect */
+.mobile-nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.mobile-nav-link:hover {
+  color: var(--color-accent);
+}
