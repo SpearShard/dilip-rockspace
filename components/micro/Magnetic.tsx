@@ -1,45 +1,37 @@
 'use client';
 
-import { useRef, type ReactNode } from 'react';
+import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { cn } from '@/lib/utils';
 
-export default function Magnetic({
-  children,
-  className,
-  strength = 0.25,
-}: {
-  children: ReactNode;
-  className?: string;
-  strength?: number;
-}) {
+export default function Magnetic({ children }: { children: React.ReactElement }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
+  useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!el) return;
 
-    const xTo = gsap.quickTo(el, 'x', { duration: 0.45, ease: 'power3.out' });
-    const yTo = gsap.quickTo(el, 'y', { duration: 0.45, ease: 'power3.out' });
-
-    const onMove = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      xTo((e.clientX - rect.left - rect.width / 2) * strength);
-      yTo((e.clientY - rect.top - rect.height / 2) * strength);
+    const move = (e: MouseEvent) => {
+      const { left, top, width, height } = el.getBoundingClientRect();
+      const x = (e.clientX - left - width / 2) * 0.4;
+      const y = (e.clientY - top - height / 2) * 0.4;
+      gsap.to(el, { x, y, duration: 1, ease: 'elastic.out(1, 0.3)' });
     };
-    const onLeave = () => { xTo(0); yTo(0); };
 
-    el.addEventListener('mousemove', onMove);
-    el.addEventListener('mouseleave', onLeave);
+    const leave = () => {
+      gsap.to(el, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.3)' });
+    };
+
+    el.addEventListener('mousemove', move);
+    el.addEventListener('mouseleave', leave);
+
     return () => {
-      el.removeEventListener('mousemove', onMove);
-      el.removeEventListener('mouseleave', onLeave);
+      el.removeEventListener('mousemove', move);
+      el.removeEventListener('mouseleave', leave);
     };
-  }, [strength]);
+  }, []);
 
   return (
-    <div ref={ref} className={cn('inline-flex', className)}>
+    <div ref={ref} className="inline-block relative">
       {children}
     </div>
   );

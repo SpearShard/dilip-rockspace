@@ -8,58 +8,84 @@ import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(ScrollTrigger);
 
 const stages = [
-  { title: 'Listen', copy: 'We decode the problem, the audience, and the business opportunity before we touch a screen.', note: 'Context' },
-  { title: 'Shape', copy: 'We frame the experience, messaging, and visual direction as one coherent system.', note: 'Direction' },
-  { title: 'Build', copy: 'We design and develop in tandem so the interface feels as intelligent as the strategy.', note: 'Execution' },
-  { title: 'Refine', copy: 'We launch fast, measure what matters, and polish the experience until it compounds.', note: 'Growth' },
+  { step: '01', title: 'Intelligence', copy: 'Decoding the problem, the audience, and the market void before a single pixel is drawn.' },
+  { step: '02', title: 'Synthesis', copy: 'Aligning the messaging, visual direction, and technical stack into one coherent system.' },
+  { step: '03', title: 'Engineering', copy: 'Creating interfaces that feel as intelligent and sharp as the strategy behind them.' },
+  { step: '04', title: 'Evolution', copy: 'Deploying fast, measuring what matters, and polishing the experience until ROI compounds.' },
 ];
 
 export default function Process() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const el = sectionRef.current;
+    const el = containerRef.current;
     if (!el) return;
 
-    gsap.fromTo(
-      '.process-card',
-      { opacity: 0, y: 24 },
-      { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.1 }
-    );
-  }, { scope: sectionRef });
+    // Pin the left heading while scrolling through the steps on the right
+    if (window.innerWidth > 1024) {
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top top',
+        end: 'bottom bottom',
+        pin: leftRef.current,
+      });
+    }
+
+    const stepCards = gsap.utils.toArray<HTMLElement>('.step-card');
+    stepCards.forEach((card) => {
+      gsap.fromTo(card,
+        { opacity: 0.1, x: 100 },
+        { 
+          opacity: 1, 
+          x: 0,
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+            end: 'center center',
+            scrub: 1,
+          }
+        }
+      );
+    });
+  }, { scope: containerRef });
 
   return (
-    <section id="process" ref={sectionRef} className="relative py-24 sm:py-28 lg:py-32">
+    <section id="process" ref={containerRef} className="relative w-full bg-surface border-t border-border">
       <div className="section-shell">
-        <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-stone-500">The process</p>
-          <h2 className="mt-4 font-display text-3xl leading-tight tracking-[-0.03em] text-stone-900 sm:text-4xl">
-            A deliberate system for work that carries weight.
-          </h2>
-        </div>
-
-        <div className="mt-10 grid gap-4 lg:grid-cols-4">
-          {stages.map((stage, index) => (
-            <div key={stage.title} className="process-card glass-panel rounded-[1.5rem] border border-black/5 p-6">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-stone-400">0{index + 1}</span>
-                <span className="text-sm font-medium text-stone-500">{stage.note}</span>
-              </div>
-              <h3 className="mt-5 font-display text-xl font-semibold text-stone-900">{stage.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-stone-600">{stage.copy}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-10 rounded-[2rem] border border-black/5 bg-white/70 p-8 shadow-[0_18px_70px_rgba(23,18,15,0.06)] sm:p-10">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-2xl text-lg leading-8 text-stone-600">
-              We keep the process focused, transparent, and calm so your team can stay in motion while we do the heavy lifting.
-            </p>
-            <div className="rounded-full border border-black/10 bg-stone-900 px-4 py-2 text-sm font-semibold text-white">
-              Fast, thoughtful, collaborative
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
+          
+          {/* Pinned Left Side */}
+          <div className="lg:w-1/2 relative hidden lg:block">
+            <div ref={leftRef} className="h-screen flex flex-col justify-center">
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-text-tertiary mb-8">
+                03 // Methodology
+              </p>
+              <h2 className="font-display text-5xl lg:text-7xl font-bold leading-[1.05] tracking-[-0.03em] text-white">
+                A deliberate <br/> system for <br/> <span className="text-text-tertiary">heavy impact.</span>
+              </h2>
             </div>
           </div>
+
+          {/* Scrolling Right Side */}
+          <div className="lg:w-1/2 lg:pt-[50vh] lg:pb-[50vh] py-32">
+            <div className="flex flex-col gap-32">
+              {stages.map((stage) => (
+                <div key={stage.step} className="step-card group relative">
+                  <span className="block font-mono text-[10px] tracking-[0.2em] text-white/50 mb-6">
+                    Phase {stage.step}
+                  </span>
+                  <h3 className="font-display text-4xl sm:text-5xl font-bold tracking-[-0.02em] text-white mb-6">
+                    {stage.title}
+                  </h3>
+                  <p className="text-base text-text-muted leading-relaxed max-w-sm">
+                    {stage.copy}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          
         </div>
       </div>
     </section>

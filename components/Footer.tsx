@@ -1,47 +1,118 @@
 'use client';
 
+import { useRef } from 'react';
 import Link from 'next/link';
-import { Camera, Link2, Mail } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const socials = [
-  { label: 'Instagram', href: 'https://www.instagram.com/rockspace.in/', icon: Camera },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/rkspace/posts/?feedView=all', icon: Link2 },
-  { label: 'Email', href: 'mailto:hello@rockspace.io', icon: Mail },
+  { 
+    label: 'Instagram', 
+    href: 'https://www.instagram.com/rockspace.in/', 
+    icon: (
+      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+      </svg>
+    )
+  },
+  { 
+    label: 'LinkedIn', 
+    href: 'https://www.linkedin.com/company/rkspace/', 
+    icon: (
+      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    )
+  },
+  { 
+    label: 'Email', 
+    href: 'mailto:hello@rockspace.io', 
+    icon: (
+      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+      </svg>
+    )
+  },
 ];
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    const el = footerRef.current;
+    if (!el) return;
+
+    gsap.fromTo('.footer-giant-text',
+      { y: '100%', opacity: 0 },
+      {
+        y: '0%',
+        opacity: 1,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          end: 'bottom bottom',
+          scrub: 1,
+        }
+      }
+    );
+  }, { scope: footerRef });
+
   return (
-    <footer className="pb-8 pt-2 sm:pb-10">
-      <div className="section-shell">
-        <div className="rounded-[2rem] border border-black/5 bg-white/70 p-6 shadow-[0_16px_60px_rgba(23,18,15,0.05)] sm:p-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-stone-500">RockSpace</p>
-              <p className="mt-2 max-w-xl text-base leading-7 text-stone-600">
-                Quietly ambitious work for founders who want their brand and product to feel unmistakably premium.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-3">
-              {socials.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-4 py-2 text-sm font-medium text-stone-700 transition-all hover:-translate-y-0.5 hover:bg-white hover:shadow-md hover:border-stone-300">
-                    <Icon className="h-4 w-4 text-stone-500 transition group-hover:text-stone-700" />
-                    {item.label}
-                  </a>
-                );
-              })}
-            </div>
+    <footer ref={footerRef} className="relative w-full bg-[#050505] pt-32 overflow-hidden border-t border-white/10">
+      <div className="section-shell relative z-10 flex flex-col min-h-[50vh] justify-between pb-10">
+        
+        <div className="flex flex-col md:flex-row justify-between items-start gap-16 mb-32">
+          <div className="max-w-md">
+            <h3 className="font-display text-3xl font-bold text-white mb-6">
+              Start Something.
+            </h3>
+            <p className="text-white/60 text-lg leading-relaxed">
+              Quietly ambitious work for founders who want their brand and product to feel unmistakably premium.
+            </p>
           </div>
-          <div className="mt-6 flex flex-col gap-3 border-t border-black/5 pt-6 text-sm text-stone-500 sm:flex-row sm:items-center sm:justify-between">
-            <p>© 2026 RockSpace. Crafted with intention.</p>
-            <div className="flex gap-4">
-              <Link href="/about" className="transition hover:text-stone-900">About</Link>
-              <Link href="/work" className="transition hover:text-stone-900">Work</Link>
-              <Link href="/contact" className="transition hover:text-stone-900">Contact</Link>
+
+          <div className="flex gap-16">
+            <div className="flex flex-col gap-4">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/40 mb-2">Navigation</span>
+              <Link href="/about" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Studio</Link>
+              <Link href="/work" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Work</Link>
+              <Link href="/contact" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Initiate</Link>
+            </div>
+            
+            <div className="flex flex-col gap-4">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/40 mb-2">Socials</span>
+              {socials.map((item) => (
+                <a 
+                  key={item.label} 
+                  href={item.href} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="group flex items-center gap-3 text-sm font-medium text-white/70 hover:text-white transition-colors cursor-none"
+                  onMouseEnter={() => document.body.classList.add('cursor-hover')}
+                  onMouseLeave={() => document.body.classList.remove('cursor-hover')}
+                >
+                  <span className="opacity-50 group-hover:opacity-100 transition-opacity">{item.icon}</span>
+                  {item.label}
+                </a>
+              ))}
             </div>
           </div>
         </div>
+
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono tracking-wider uppercase text-white/30">
+          <p>© {new Date().getFullYear()} ROCKSPACE</p>
+          <p>CRAFTED WITH INTENTION</p>
+        </div>
+      </div>
+
+      <div className="w-full overflow-hidden leading-none flex items-end pt-10 pointer-events-none select-none">
+        <h1 className="footer-giant-text font-display text-[15vw] font-black text-white/5 tracking-tighter w-full text-center m-0 p-0 leading-[0.75]">
+          ROCKSPACE
+        </h1>
       </div>
     </footer>
   );
