@@ -75,7 +75,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex gap-16">
+          <div className="flex gap-10 sm:gap-16">
             <div className="flex flex-col gap-4">
               <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/40 mb-2">Navigation</span>
               <Link href="/about" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Studio</Link>

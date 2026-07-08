@@ -87,15 +87,19 @@ export default function Story() {
 
   return (
     <section id="story" ref={sectionRef} className="relative w-full bg-black border-t border-white/10">
-      <div className="section-shell py-32">
+      <div className="section-shell py-16 sm:py-32">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-20">
           
           {/* Pinned Left Side */}
           <div className="lg:w-5/12 relative">
-            <div ref={leftPinRef} className="lg:h-screen flex flex-col justify-center pt-20 lg:pt-0">
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 mb-8">
-                04 // The Origin
-              </p>
+            {/* Mobile heading */}
+            <div className="lg:hidden mb-12">
+              <h2 className="font-display text-5xl sm:text-6xl font-bold leading-[1.05] tracking-[-0.03em] text-white">
+                Three paths <br/> collided<span className="text-white/30">.</span>
+              </h2>
+            </div>
+            {/* Desktop pinned */}
+            <div ref={leftPinRef} className="hidden lg:flex h-screen flex-col justify-center pt-20 lg:pt-0">
               <h2 className="font-display text-5xl lg:text-7xl font-bold leading-[1.05] tracking-[-0.03em] text-white">
                 Three paths <br/> collided<span className="text-white/30">.</span>
               </h2>

@@ -82,3 +82,16 @@ body.cursor-hover .cursor-outline {
 /* Hide scrollbar for immersion */
 ::-webkit-scrollbar { display: none; }
 body { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Mobile tap highlight removal */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Better touch targets on mobile */
+@media (hover: none) and (pointer: coarse) {
+  * { cursor: auto !important; }
+  .cursor-dot, .cursor-outline { display: none !important; }
+  .card-hover:hover { transform: none !important; }
+}
+
+/* Ensure images in work grid don't overflow */
+img { max-width: 100%; height: auto; }

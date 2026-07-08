@@ -34,7 +34,7 @@ export default function Services() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-screen bg-bg py-32 overflow-hidden border-t border-border">
+    <section ref={sectionRef} className="relative w-full min-h-screen bg-bg py-16 sm:py-32 overflow-hidden border-t border-border">
       
       <div className="absolute inset-0 z-0 opacity-[0.15] transition-all duration-1000 ease-in-out">
         <img src={activeImg} alt="Service Background" className="w-full h-full object-cover filter grayscale blur-sm" />
@@ -42,10 +42,6 @@ export default function Services() {
       </div>
 
       <div className="section-shell relative z-10 services-container h-full flex flex-col justify-center">
-        <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-text-tertiary mb-16">
-          02 // Capabilities
-        </p>
-
         <div className="flex flex-col border-t border-border">
           {services.map((srv, idx) => (
             <div 

@@ -32,7 +32,7 @@ export default function Contact() {
   }, { scope: sectionRef });
 
   return (
-    <section id="contact" ref={sectionRef} className="relative w-full bg-black py-40 border-t border-white/10 flex flex-col items-center justify-center text-center">
+    <section id="contact" ref={sectionRef} className="relative w-full bg-black py-20 sm:py-40 border-t border-white/10 flex flex-col items-center justify-center text-center">
       <div className="section-shell">
         <p className="contact-reveal font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 mb-8">
           06 // Initiate

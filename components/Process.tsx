@@ -56,11 +56,15 @@ export default function Process() {
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
           
           {/* Pinned Left Side */}
-          <div className="lg:w-1/2 relative hidden lg:block">
-            <div ref={leftRef} className="h-screen flex flex-col justify-center">
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-text-tertiary mb-8">
-                03 // Methodology
-              </p>
+          <div className="lg:w-1/2 relative">
+            {/* Mobile heading (visible below lg) */}
+            <div className="lg:hidden mb-16">
+              <h2 className="font-display text-5xl sm:text-6xl font-bold leading-[1.05] tracking-[-0.03em] text-white">
+                A deliberate <br/> system for <br/> <span className="text-text-tertiary">heavy impact.</span>
+              </h2>
+            </div>
+            {/* Desktop pinned */}
+            <div ref={leftRef} className="hidden lg:flex h-screen flex-col justify-center">
               <h2 className="font-display text-5xl lg:text-7xl font-bold leading-[1.05] tracking-[-0.03em] text-white">
                 A deliberate <br/> system for <br/> <span className="text-text-tertiary">heavy impact.</span>
               </h2>
@@ -68,7 +72,7 @@ export default function Process() {
           </div>
 
           {/* Scrolling Right Side */}
-          <div className="lg:w-1/2 lg:pt-[50vh] lg:pb-[50vh] py-32">
+          <div className="lg:w-1/2 lg:pt-[50vh] lg:pb-[50vh] py-16 lg:py-32">
             <div className="flex flex-col gap-32">
               {stages.map((stage) => (
                 <div key={stage.step} className="step-card group relative">

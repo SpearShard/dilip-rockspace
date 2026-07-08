@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 
-const bullets = ['Brand systems', 'Product design', 'Web experiences', 'AI workflows'];
+// const bullets = ['Brand systems', 'Product design', 'Web experiences', 'AI workflows'];
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -40,7 +40,7 @@ export default function Hero() {
   }, { scope: sectionRef });
 
   return (
-    <section id="hero" ref={sectionRef} className="relative w-full min-h-screen flex items-center pt-20 overflow-hidden bg-[#030303]">
+    <section id="hero" ref={sectionRef} className="relative w-full min-h-dvh flex items-center pt-24 sm:pt-20 pb-12 sm:pb-0 overflow-hidden bg-[#030303]">
       {/* Cinematic Ambient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] rounded-full bg-[radial-gradient(circle,rgba(217,108,74,0.06),transparent_60%)] blur-[120px] pointer-events-none" />
 
@@ -68,16 +68,9 @@ export default function Hero() {
               </Link>
             </div>
 
-            <div className="mt-12 flex flex-wrap gap-3">
-              {bullets.map((item) => (
-                <span key={item} className="rounded-full border border-white/10 px-4 py-2 text-xs font-mono uppercase tracking-widest text-white/40">
-                  {item}
-                </span>
-              ))}
-            </div>
           </div>
 
-          <div className="hero-card relative perspective-[1000px]">
+          <div className="hero-card relative perspective-[1000px] hidden sm:block">
             <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#0a0a0a] p-2">
               <div className="aspect-[3/4] overflow-hidden rounded-[1.5rem]">
                 <video 

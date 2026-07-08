@@ -68,7 +68,7 @@ export default function Team() {
   }, { scope: sectionRef });
 
   return (
-    <section id="team" ref={sectionRef} className="relative w-full bg-black py-32 overflow-hidden border-t border-white/10">
+    <section id="team" ref={sectionRef} className="relative w-full bg-black py-20 sm:py-32 overflow-hidden border-t border-white/10">
       
       {/* Background Glow */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] pointer-events-none z-0 opacity-20">
@@ -77,9 +77,6 @@ export default function Team() {
 
       <div className="section-shell relative z-10">
         <div className="mb-20">
-          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 mb-6">
-            05 // The People
-          </p>
           <h2 className="font-display text-5xl sm:text-7xl font-bold tracking-tighter text-white">
             BEHIND THE STUDIO<span className="text-white/30">.</span>
           </h2>
