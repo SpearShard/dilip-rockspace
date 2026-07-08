@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { gsap } from 'gsap';
 import { usePathname } from 'next/navigation';
 import Magnetic from './micro/Magnetic';
@@ -15,110 +16,74 @@ const links = [
 export default function Nav() {
   const navRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const starRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Pre-initialize GSAP timeline for instant menu response
-  const tl = useRef<gsap.core.Timeline | null>(null);
-
   useEffect(() => {
-    // Initial entry
-    gsap.fromTo(navRef.current, 
-      { y: -100, opacity: 0 }, 
-      { y: 0, opacity: 1, duration: 1.5, ease: 'power4.out', delay: 0.5 }
-    );
-
-    // Setup timeline once
-    tl.current = gsap.timeline({ paused: true });
-    tl.current
-      .to(overlayRef.current, { autoAlpha: 1, duration: 0.3 })
-      .to(menuRef.current, { x: 0, duration: 0.5, ease: 'power4.out' }, 0)
-      .fromTo('.mobile-nav-link', { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.05 }, 0.2);
-
+    gsap.fromTo(navRef.current, { y: -50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power4.out' });
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Trigger timeline based on state
-  useEffect(() => {
-    if (menuOpen) {
-      tl.current?.play();
-      document.body.style.overflow = 'hidden';
+  const toggleMenu = () => {
+    const isOpen = !menuOpen;
+    setMenuOpen(isOpen);
+    const tl = gsap.timeline();
+
+    if (isOpen) {
+      tl.to(starRef.current, { rotate: 180, duration: 0.6, ease: 'power3.inOut' })
+        .to(menuRef.current, { height: 'auto', opacity: 1, duration: 0.5, ease: 'power4.out' }, 0)
+        .fromTo('.nav-link-mobile', { y: 10, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, ease: 'power3.out' }, 0.2);
     } else {
-      tl.current?.reverse();
-      document.body.style.overflow = '';
+      tl.to(starRef.current, { rotate: 0, duration: 0.6, ease: 'power3.inOut' })
+        .to(menuRef.current, { height: 0, opacity: 0, duration: 0.4, ease: 'power3.inOut' });
     }
-  }, [menuOpen]);
+  };
 
   return (
-    <header 
-      ref={navRef} 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? 'bg-black/80 backdrop-blur-lg border-b border-white/5 py-4' : 'bg-transparent py-6'
-      }`}
-    >
-      <div className="section-shell flex items-center justify-between">
-        
-        <Magnetic>
-          <Link href="/" className="z-10 flex items-center">
-            <span className="font-display text-lg font-bold tracking-tighter text-white">
-              ROCKSPACE<span className="text-white/40">.</span>
-            </span>
-          </Link>
-        </Magnetic>
+    <header ref={navRef} className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/80 backdrop-blur-lg py-4' : 'bg-transparent py-6'}`}>
+      <div className="section-shell">
+        <div className="flex items-center justify-between">
+          <Magnetic>
+            <Link href="/" className="z-50 font-display text-lg font-bold text-white">ROCKSPACE.</Link>
+          </Magnetic>
 
-        <nav className="hidden md:flex items-center gap-10">
-          {links.map((link) => (
-            <Link 
-              key={link.label} 
-              href={link.href}
-              className={`text-[11px] font-mono uppercase tracking-[0.2em] transition-colors ${
-                pathname === link.href ? 'text-white' : 'text-white/50 hover:text-white'
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+          <nav className="hidden md:flex items-center gap-10">
+            {links.map((link) => (
+              <Link key={link.label} href={link.href} className={`text-[11px] font-mono uppercase tracking-[0.2em] ${pathname === link.href ? 'text-white' : 'text-white/50 hover:text-white'}`}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
 
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden w-12 h-12 flex flex-col items-center justify-center gap-1.5 z-[100]"
-          aria-label="Toggle menu"
+          <button onClick={toggleMenu} className="md:hidden relative z-50 w-12 h-12 flex items-center justify-center">
+            <div ref={starRef} className="relative w-8 h-8">
+              <Image src="/Vector 2173.png" alt="Menu" fill className="object-contain" />
+            </div>
+          </button>
+        </div>
+
+        {/* Below-the-star Dropdown */}
+        <div 
+          ref={menuRef}
+          className="md:hidden overflow-hidden opacity-0 h-0"
         >
-          <span className={`block w-6 h-[1px] bg-white transition-transform ${menuOpen ? 'rotate-45 translate-y-[2.5px]' : ''}`} />
-          <span className={`block w-6 h-[1px] bg-white transition-transform ${menuOpen ? '-rotate-45 -translate-y-[2.5px]' : ''}`} />
-        </button>
-      </div>
-
-      {/* Mobile Menu Overlay */}
-      <div 
-        ref={overlayRef} 
-        onClick={() => setMenuOpen(false)} 
-        className="fixed inset-0 bg-black/80 backdrop-blur-md z-[45] invisible opacity-0" 
-      />
-
-      {/* Sliding Menu */}
-      <div 
-        ref={menuRef} 
-        className="fixed top-0 right-0 h-full w-[100vw] sm:w-[400px] bg-[#050505] border-l border-white/10 z-[46] flex flex-col justify-center px-10" 
-        style={{ transform: 'translateX(100%)' }}
-      >
-        <nav className="flex flex-col gap-8">
-          {links.map((link) => (
-            <Link 
-              key={link.label} 
-              href={link.href} 
-              onClick={() => setMenuOpen(false)} 
-              className="mobile-nav-link font-display text-5xl font-bold text-white block"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+          <nav className="flex flex-col gap-6 pt-8 pb-4 text-right">
+            {links.map((link) => (
+              <Link 
+                key={link.label} 
+                href={link.href} 
+                onClick={toggleMenu}
+                className="nav-link-mobile font-display text-3xl font-bold text-white block hover:text-white/40 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
       </div>
     </header>
   );
