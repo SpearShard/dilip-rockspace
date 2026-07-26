@@ -309,7 +309,7 @@ export default function BrandIdentity() {
           {/* MID RIGHT FRAGMENT */}
           <div className="glass-capsule md:col-span-2 md:row-span-1 bg-white/[0.18] border border-white/30 p-6 hidden md:flex flex-col justify-between text-right rounded-[20px_20px_20px_20px] shadow-[0_24px_50px_-12px_rgba(0,0,0,0.25)]">
             <div className="text-[9px] font-mono tracking-[0.3em] text-white/60 font-bold">DIAG_VECTOR</div>
-            <div className="text-[11px] font-mono text-white/50 font-medium">SYS_LIVE</div>
+           
           </div>
 
           {/* BOTTOM LEFT FRAGMENT */}
