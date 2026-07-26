@@ -24,30 +24,10 @@ export interface TeamMember {
 export const projects: Project[] = [
 
   // ── Websites ──
+  
+ 
   {
     id: '001',
-    title: 'Galactic 3D',
-    subtitle: 'Industrial additive manufacturing',
-    category: 'Websites',
-    description: 'ISO-certified additive manufacturing firm needed a site that matched the precision of their parts. Hero video, service breakdowns, and a quote flow built to convert industrial buyers.',
-    image: '/work/001-galactic-3d.jpg',
-    month: 'January',
-    year: '2025',
-    url: 'https://www.galactic-3d.com',
-  },
-  {
-    id: '002',
-    title: 'TeraaWatt',
-    subtitle: 'EV & clean energy ecosystem',
-    category: 'Websites',
-    description: 'Brand site for the TeraaWatt product ecosystem: TeraaCharge, TeraaMart, TeraaCycle. Canvas animations, neon wireframe aesthetics, investor-ready pitch layout.',
-    image: '/work/002-teraawatt.jpg',
-    month: 'March',
-    year: '2025',
-    url: 'https://www.teraawatt.com',
-  },
-  {
-    id: '003',
     title: 'TechEdumatic Solutions',
     subtitle: 'Ed-tech corporate site',
     category: 'Websites',
@@ -58,7 +38,7 @@ export const projects: Project[] = [
     url: 'https://www.techedumaticsolutions.com',
   },
   {
-    id: '004',
+    id: '002',
     title: 'Cambrian Skills DA',
     subtitle: 'Data intelligence platform',
     category: 'Websites',
@@ -68,19 +48,9 @@ export const projects: Project[] = [
     year: '2025',
     url: 'https://cambrian-skills-da.vercel.app',
   },
+ 
   {
-    id: '005',
-    title: 'Dronza',
-    subtitle: 'Drone services startup',
-    category: 'Websites',
-    description: 'Launch site for a drone-tech startup. Service tier cards, aerial footage integrations, and a bold full-viewport hero built to generate early traction.',
-    image: '/work/005-dronza.jpg',
-    month: 'March',
-    year: '2025',
-    url: 'https://dronza-wvmk.vercel.app',
-  },
-  {
-    id: '006',
+    id: '003',
     title: 'Sky2Earth',
     subtitle: 'Aerial solutions brand',
     category: 'Websites',
@@ -91,7 +61,7 @@ export const projects: Project[] = [
     url: 'https://sky2earth.in',
   },
   {
-    id: '007',
+    id: '004',
     title: 'MLSA_CIT',
     subtitle: 'Microsoft tech club hub',
     category: 'Websites',
@@ -102,7 +72,7 @@ export const projects: Project[] = [
     url: 'https://mlsacit-weld.vercel.app',
   },
   {
-    id: '008',
+    id: '005',
     title: 'Cambrian Open House',
     subtitle: 'Student exhibition & demo day',
     category: 'Websites',
@@ -113,7 +83,7 @@ export const projects: Project[] = [
     url: 'https://openhouse-delta.vercel.app',
   },
   {
-    id: '009',
+    id: '006',
     title: 'RGB Design',
     subtitle: 'Breaking the color grid',
     category: 'Websites',
@@ -125,7 +95,7 @@ export const projects: Project[] = [
   },
 
   {
-    id: '010',
+    id: '007',
     title: 'JOSEPHITERUN',
     subtitle: 'Marathon & community run platform',
     category: 'Websites',
@@ -136,7 +106,7 @@ export const projects: Project[] = [
     url: 'https://josephiterun.in',
   },
   {
-    id: '011',
+    id: '008',
     title: 'TEDxCITBengaluru',
     subtitle: 'Ideas worth spreading',
     category: 'Websites',
@@ -149,7 +119,7 @@ export const projects: Project[] = [
 
   // ── Projects ──
   {
-    id: '012',
+    id: '009',
     title: 'RepoGami',
     subtitle: 'Codebase visualization tool',
     category: 'Projects',
@@ -162,7 +132,7 @@ export const projects: Project[] = [
 
   // ── Designs/Mockups ──
   {
-    id: '013',
+    id: '010',
     title: 'ALA',
     subtitle: 'Idea to sketch, 5-page flow',
     category: 'Designs',
@@ -178,7 +148,7 @@ export const projects: Project[] = [
     year: '2025',
   },
   {
-    id: '014',
+    id: '011',
     title: 'Capture 360',
     subtitle: 'Brand identity & visual system',
     category: 'Designs',
@@ -188,7 +158,7 @@ export const projects: Project[] = [
     year: '2025',
   },
   {
-    id: '015',
+    id: '012',
     title: 'Q Series',
     subtitle: 'Typography & form exploration',
     category: 'Designs',
@@ -198,7 +168,7 @@ export const projects: Project[] = [
     year: '2025',
   },
   {
-    id: '016',
+    id: '013',
     title: 'Open House',
     subtitle: 'Event poster & collateral',
     category: 'Designs',
@@ -208,7 +178,7 @@ export const projects: Project[] = [
     year: '2025',
   },
   {
-    id: '017',
+    id: '014',
     title: 'Group 101',
     subtitle: 'Community brand system',
     category: 'Designs',
@@ -218,7 +188,7 @@ export const projects: Project[] = [
     year: '2025',
   },
   {
-    id: '018',
+    id: '015',
     title: 'GDG',
     subtitle: 'Google Developer Groups brand',
     category: 'Designs',
@@ -228,7 +198,7 @@ export const projects: Project[] = [
     year: '2025',
   },
   {
-    id: '019',
+    id: '016',
     title: '3D View',
     subtitle: 'Architectural visualization',
     category: 'Designs',
@@ -238,7 +208,7 @@ export const projects: Project[] = [
     year: '2025',
   },
   {
-    id: '020',
+    id: '017',
     title: '3×6 Golden',
     subtitle: 'Grid system & composition',
     category: 'Designs',
@@ -250,7 +220,7 @@ export const projects: Project[] = [
 
   // ── Thumbnails ──
   {
-    id: '021',
+    id: '018',
     title: '',
     subtitle: '',
     category: 'Thumbnails',
@@ -261,7 +231,7 @@ export const projects: Project[] = [
     url: 'https://youtu.be/z-e4S3C155w',
   },
   {
-    id: '022',
+    id: '019',
     title: '',
     subtitle: '',
     category: 'Thumbnails',
@@ -272,7 +242,7 @@ export const projects: Project[] = [
     url: 'https://youtu.be/-UORHKxp_xA',
   },
   {
-    id: '023',
+    id: '020',
     title: '',
     subtitle: '',
     category: 'Thumbnails',
